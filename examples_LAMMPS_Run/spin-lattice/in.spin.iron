@@ -1,0 +1,146 @@
+#------------------------------------------------------------------initialization------------------------------------------------------------------#
+dimension 		3
+boundary		p p p
+units			metal
+atom_style	    	spin  
+neighbor 		0.1 bin
+neigh_modify 		every 10 check yes delay 20
+atom_modify 		map array
+shell "mkdir -p dump"
+#----------------------------------------------------------------------------Box of simulation-----------------------------------------------------#
+
+read_data	/path/to/Fe_Spin.lmp
+
+
+#---------------------------------------------------------------Interatomic potential--------------------------------------------------------------#
+
+#set 		group all spin/random 31 2.28
+set 		group all spin 2.28 0.0 0.0 1.0
+
+#pair_style 	hybrid/overlay eam/alloy spin/exchange 6.5
+#pair_coeff 	* * eam/alloy /path/to/Fe_Mishin2006.eam.alloy Fe
+#pair_coeff 	* * spin/exchange exchange 6.5 0.02055 0.29 2.08 offset yes
+
+#pair_style 	hybrid/overlay tersoff spin/exchange 6.5
+#pair_coeff 	* * tersoff /path/to/Tersoff_MuellerErhartAlbe_2007_Fe.params Fe
+#pair_coeff 	* * spin/exchange exchange 6.5 0.02055 0.29 2.08 offset yes
+
+#pair_style 	hybrid/overlay adp spin/exchange 6.5
+#pair_coeff 	* * adp /path/to//Fe.adp Fe
+#pair_coeff 	* * spin/exchange exchange 6.5 0.02055 0.29 2.08 offset yes
+
+#pair_style  	hybrid/overlay meam spin/exchange 6.5
+#pair_coeff     * * meam /path/to/library_CoNiCrFeMn.meam.txt Co Mn Ni Cr Fe /path/to/CoNiCrFeMn.meam.txt Fe
+#pair_coeff 	* * spin/exchange exchange 6.5 0.02055 0.29 2.08 offset yes
+
+pair_style 	hybrid/overlay eam/alloy spin/exchange 6.5
+pair_coeff 	* * eam/alloy /path/to/Fe_Mishin2006.eam.alloy Fe
+pair_coeff 	* * spin/exchange exchange 6.5 0.02055 0.29 2.08 offset yes
+
+timestep	0.0001
+thermo      	100
+
+#-----------------------------------------------------------------Property computes---------------------------------------------------------------#
+
+compute 	out_mag    all spin
+compute 	out_pe     all pe
+compute 	out_ke     all ke
+compute 	out_temp   all temp
+compute 	outsp all property/atom spx spy spz sp fmx fmy fmz
+
+variable 	magz      equal c_out_mag[3]
+variable 	magnorm   equal c_out_mag[4]
+variable 	emag      equal c_out_mag[5]
+variable 	tmag      equal c_out_mag[6]
+
+#--------------------------------------------------------------------Relaxation-------------------------------------------------------------------#
+
+thermo_style    custom step time v_magnorm v_tmag temp v_emag ke pe press etotal
+
+fix 			Relax all box/relax iso 500000.0
+min_style		cg               
+minimize 		1e-25 1e-25 5000 10000
+unfix			Relax
+
+#--------------------------------------------------------------Semi-NPT calculation---------------------------------------------------------------#
+#--------------------------------------------------------------Output visualization---------------------------------------------------------------#
+
+dump		1 all cfg 1000 /path/to/dump/Fe.*.cfg  mass type xs ys zs id c_outsp[1] c_outsp[2] c_outsp[3]
+dump_modify	1 element Fe
+
+#---------------------------------------------------------------------nvt-------------------------------------------------------------------------#
+fix 		1 all precession/spin anisotropy 1.27e-11 0.0 0.0 -1.0
+fix_modify	1 energy yes
+
+#fix 		1 all precession/spin zeeman 0.0 0.0 0.0 1.0    #0.5
+#fix_modify     1 energy yes
+
+#fix 		1 all precession/spin cubic 0.001 0.0005 1.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0
+#fix_modify 	1 energy yes
+
+fix 		S2 all langevin/spin 300.0 0.1 21
+fix 		S3 all nve/spin lattice moving
+fix         	nmg all langevin 300.0 300.0 0.1 48279
+
+run 50000
+
+unfix       S2
+unfix       S3
+unfix       nmg
+#---------------------------------------------------------------npt+spin frozen------------------------------------------------------------------#
+
+fix 		npt all npt temp 300.0 300.0 0.1 iso 500000.0 500000.0 1.0
+
+run 10000
+
+unfix 		npt
+
+#-------------------------------------------------------------------nvt--------------------------------------------------------------------------#
+fix 		S3 all nve/spin lattice moving
+fix 		S2 all langevin/spin 300.0 0.1 21
+fix         	nmg all langevin 300.0 300.0 0.1 48279
+
+run 50000
+
+#---------------------------------------------------------------Output visualization-------------------------------------------------------------#
+
+dump		1 all cfg 1000 /path/to/dump/Fe.*.cfg  mass type xs ys zs id c_outsp[1] c_outsp[2] c_outsp[3]
+dump_modify	1 element Fe
+
+
+#-----------------------------------------------------------Computational characterization-------------------------------------------------------#
+
+
+#traj for VDOS
+
+dump        	2 all xyz 1 /path/to/dump/traj-300K.xyz	
+dump_modify 	2 element Fe
+
+run		2000
+
+undump          2
+undump          1
+
+
+compute XRD all xrd 1.541838 Fe 2Theta 20 100 c 0.05 0.05 0.05 LP 1 manual echo
+fix XRD all ave/histo/weight 1 1 1 20 100 1000 c_XRD[1] c_XRD[2] mode vector file /path/to/dump/Deg2Theta_SLFe-300K.xrd
+
+compute     SAED_SLFe all saed 0.0251 Fe Kmax 1.72 &
+            Zone 0 1 0 c 0.002 0.002 0.002 & 
+            dR_Ewald 0.005 echo manual
+            
+fix         SLFe all saed/vtk 1 1 1 c_SAED_SLFe file /path/to/dump/SLFe-300K.saed 
+
+run             0
+
+unfix           XRD
+uncompute       XRD
+unfix           SLFe
+uncompute       SAED_SLFe
+
+unfix       S2
+unfix       S3
+unfix       nmg
+
+
+#write_restart 	/path/to/dump/SLFe_1400K.restart
