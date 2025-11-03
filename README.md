@@ -1,3 +1,6 @@
+
+<img width="1552" height="689" alt="GraphicalAbstract" src="https://github.com/user-attachments/assets/820411b4-2f95-4c8d-b367-2585a7e1509a" />
+
 ⚛️ Virtual Characterization Lab (VCL) Toolkit
 
 The Virtual Characterization Lab (VCL) Toolkit is an open-source, unified, CLI-based Python framework designed to introduce a new paradigm in how materials researchers process and analyze molecular dynamics (MD) simulation data. Its core function is to generate outputs that are directly comparable side-by-side with experimental characterization results.
