@@ -1,5 +1,5 @@
 
-<img width="1552" height="689" alt="GraphicalAbstract" src="https://github.com/user-attachments/assets/820411b4-2f95-4c8d-b367-2585a7e1509a" />
+<img width="4582" height="3123" alt="Intro_Fig-3" src="https://github.com/user-attachments/assets/752927c3-3dd5-438f-b9b8-14bcd12c3392" />
 
 ⚛️ Virtual Characterization Lab (VCL) Toolkit
 
@@ -13,15 +13,9 @@ To use the VCL Toolkit, create a dedicated folder, place all the Binary inside i
 
 ⚙️ Requirements
 
-    Python: Requires Python 3.6 or later (3.9 – 3.12 recommended).
-
-    Python Libraries: Install the primary dependencies: pip install numpy matplotlib scipy ase
-
-    External Programs: The vtk file visualizer relies on an external program being installed and accessible in your system PATH:
-
-        VisIt: For visualizing SAED patterns. (Download: https://visit-dav.github.io/visit-website/releases-as-tables/)
-
-💡 
+VCL requires an external programs:
+Visit	https://visit-dav.github.io/visit-website/releases-as-tables/	# For visualizing SAED pattern (vtk files)
+This must be installed and accessible in your system PATH so the scripts can call them. 
 
 📖 Note
 
