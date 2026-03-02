@@ -115,6 +115,7 @@ dump_modify	1 element Fe
 
 dump        	2 all xyz 1 /path/to/dump/traj-300K.xyz	
 dump_modify 	2 element Fe
+dump_modify     2 sort id
 
 run		2000
 

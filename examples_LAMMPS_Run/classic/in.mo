@@ -66,6 +66,7 @@ fix		L dyn_cyl langevin 1700 1700 0.01 699483
 
 dump        	2 charc_cyl xyz 1 /path/to//dump/traj-Screw-1700.xyz	
 dump_modify 	2 element Mo
+dump_modify     2 sort id
 
 run		2000
 
