@@ -7,15 +7,15 @@ The Virtual Characterization Lab (VCL) is a unified, open-source toolkit designe
 
 By integrating every step from initial structure preparation to final data visualization, the VCL accelerates materials discovery by making virtual characterization more efficient, accessible, and directly comparable to experimental results. The pre- and post-processing modules support classical MD, reactive MD (RMD), and Spin-Lattice Dynamics (SLD). The architecture allows each computational module to be executed independently via a command-line interface (CLI) or through the centralized GUI. Additionally, a local HTTP server is integrated to serve static HTML documentation directly to the user's browser for offline reference.
 
-🚀 Getting Started
+## 🚀 Getting Started
 
-To use the VCL Toolkit, create a dedicated folder, place all the Binary inside it, and follow these steps:
+Download the current release for your platform from the [GitHub Releases](https://github.com/Vahid-jb/Virtual-Characterization-Lab-Toolkit/releases) page and extract the archive to a folder of your choice.
 
-⚙️ Requirements
+The GUI can be launched by running the `vcl_gui` executable. The compute scripts can also be used standalone by invoking them directly from a terminal with an input file. Refer to the [documentation](Doc.pdf) for details.
 
-VCL requires an external programs:
-Visit	https://visit-dav.github.io/visit-website/releases-as-tables/	# For visualizing SAED pattern (vtk files)
-This must be installed and accessible in your system PATH so the scripts can call them. 
+## ⚙️ Requirements
+
+Visualizing SAED patterns requires [VisIt](https://visit-dav.github.io/visit-website/releases-as-tables/), which must be installed and accessible on your system `PATH`.
 
 📖 Note
 
