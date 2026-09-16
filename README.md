@@ -29,4 +29,4 @@ Users may also create or edit input files manually when required. The CLI workfl
 ## Documentation
 
 Open the in-app help (the **Docs (port 8000)** button in any module) for the bundled module
-guides, or browse [docs/modules](docs/modules/index.md).
+guides, or browse [docs/modules](sources/docs_site/docs/index.md).
