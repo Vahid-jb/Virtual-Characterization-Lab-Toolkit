@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Input Converter - VCL Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">VCL Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Input Converter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../SAED_Docs/" class="nav-link">SAED</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Structure_Analyzer_Docs/" class="nav-link">Structure Analyzer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Vibrational_Analysis_Docs/" class="nav-link">Vibrational Analysis</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../XRD_Docs/" class="nav-link">XRD</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../SAED_Docs/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#input-converter-and-format-manager" class="nav-link">Input Converter and Format Manager</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#1-introduction" class="nav-link">1. Introduction</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#2-particle-definitions-and-lammps-formats" class="nav-link">2. Particle Definitions and LAMMPS Formats</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#3-output-files" class="nav-link">3. Output Files</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="input-converter-and-format-manager">Input Converter and Format Manager</h1>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>The <strong>Input Converter</strong> is a versatile tool designed to bridge the gap between various computational materials science software packages. Its primary function is to convert atomic structure files into formats compatible with LAMMPS (Large-scale Atomic/Molecular Massively Parallel Simulator) and visualization tools like Ovito. </p>
+<p>It automatically handles tasks such as:</p>
+<ul>
+<li><strong>Orthogonalization</strong> of triclinic simulation cells.</li>
+<li>Assignment of <strong>Charge</strong> and <strong>Spin</strong> degrees of freedom for <strong>reactive MD or spin-lattice dynamics</strong>.</li>
+</ul>
+<h2 id="2-particle-definitions-and-lammps-formats">2. Particle Definitions and LAMMPS Formats</h2>
+<p>The tool supports three distinct "modes" corresponding to different physical models in Molecular Dynamics (MD).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Mode</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">LAMMPS Format</th>
+<th style="text-align: left;">Columns in <code>.lmp</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Classic</strong></td>
+<td style="text-align: left;">Classical MD with neutral point particles.</td>
+<td style="text-align: left;"><code>atom_style atomic</code></td>
+<td style="text-align: left;"><code>ID type x y z</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Charge</strong></td>
+<td style="text-align: left;">MD with explicit Coulombic interactions (ions).</td>
+<td style="text-align: left;"><code>atom_style charge</code></td>
+<td style="text-align: left;"><code>ID type charge x y z</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Spin</strong></td>
+<td style="text-align: left;">Magnetic MD with atomic spin moments.</td>
+<td style="text-align: left;"><code>atom_style spin</code></td>
+<td style="text-align: left;"><code>ID type x y z sx sy sz scalar_spin</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Atomic Spin</strong>: In <code>spin</code> mode, the script adds 4 extra columns. <code>sx, sy, sz</code> represent the direction of the spin vector, and <code>scalar_spin</code> represents the magnitude (in Bohr magnetons).</li>
+<li><strong>Initialization</strong>: All <code>charge</code> and <code>spin</code> values are initially set to <strong>zero</strong> for convenience. Users can assign specific charge and spin values in their LAMMPS input script using the <code>set</code> command.</li>
+</ul>
+<h2 id="3-output-files">3. Output Files</h2>
+<p>The script generates different outputs based on the requested filename extension: <code>.lmp</code>, <code>.data</code>, <code>.lammps</code> (LAMMPS data); <code>.dump</code>, <code>.lammpstrj</code> (LAMMPS dump); <code>.xyz</code>, <code>.extxyz</code> (extended XYZ); <code>.cif</code>; <code>.cfg</code>; <code>.xsf</code>; <code>.pdb</code>, <code>.ent</code>; and <code>.vasp</code>, <code>.poscar</code>, <code>.contcar</code> (VASP). Any other extension, including extension-less names such as <code>POSCAR</code>, is written as extended XYZ. Input structures are read with the <strong>Atomic Simulation Environment (ASE)</strong> backend (LAMMPS files with a built-in reader); see the <a href="https://wiki.fysik.dtu.dk/ase/ase/io/io.html">ASE IO documentation</a> for readable formats.</p>
+<p>Specific details for key formats:</p>
+<ol>
+<li>
+<p><strong>LAMMPS Data (<code>.lmp</code>, <code>.data</code>)</strong>:</p>
+<ul>
+<li>Header containing <code>N atoms</code>, <code>N atom types</code>.</li>
+<li>Box bounds: <code>xlo xhi</code>, <code>ylo yhi</code>, <code>zlo zhi</code> (and <code>xy xz yz</code> for triclinic).</li>
+<li><code>Masses</code> section: Inferred from periodic table based on element symbols.</li>
+<li><code>Atoms</code> section: The coordinate data in the selected format (Classic/Charge/Spin), labelled <code>Atoms # atomic</code>, <code>Atoms # charge</code> or <code>Atoms # spin</code> so that OVITO and ASE can detect the atom style (ASE has no reader for the spin style).</li>
+</ul>
+</li>
+<li>
+<p><strong>LAMMPS Dump (<code>.dump</code>, <code>.lammpstrj</code>)</strong>:</p>
+<ul>
+<li>Written when the input contains multiple frames (a requested <code>.lmp</code>/<code>.data</code> name is then changed to <code>.dump</code>), or whenever the output name ends in <code>.dump</code>/<code>.lammpstrj</code>, even for a single frame.</li>
+<li>Standard LAMMPS dump format with <code>ITEM: TIMESTEP</code>, <code>ITEM: NUMBER OF ATOMS</code>, <code>ITEM: BOX BOUNDS</code>, <code>ITEM: ATOMS ...</code>. Atom types are stored as numbers, without element names; triclinic cells use the <code>ITEM: BOX BOUNDS xy xz yz pp pp pp</code> form.</li>
+</ul>
+</li>
+<li>
+<p><strong>Extended XYZ (<code>.xyz</code>, <code>.extxyz</code>)</strong>:</p>
+<ul>
+<li>Compatible with <strong>Ovito</strong>.</li>
+<li>Includes Lattice string and Properties line (e.g., <code>Properties=species:S:1:pos:R:3</code>).</li>
+</ul>
+</li>
+</ol></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

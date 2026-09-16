@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Vibrational Analysis - VCL Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">VCL Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Input_Converter_Docs/" class="nav-link">Input Converter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../SAED_Docs/" class="nav-link">SAED</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Structure_Analyzer_Docs/" class="nav-link">Structure Analyzer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Vibrational Analysis</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../XRD_Docs/" class="nav-link">XRD</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../Structure_Analyzer_Docs/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../XRD_Docs/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#vibrational-analysis-module" class="nav-link">Vibrational Analysis Module</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#part-i-vibrational-density-of-states-vdos" class="nav-link">Part I: Vibrational Density of States (VDOS)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#part-ii-infrared-ir-spectra" class="nav-link">Part II: Infrared (IR) Spectra</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#part-iii-signal-processing-corrections" class="nav-link">Part III: Signal Processing &amp; Corrections</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#notes" class="nav-link">Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#recommended-validation-sequence" class="nav-link">Recommended validation sequence</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="vibrational-analysis-module">Vibrational Analysis Module</h1>
+<h2 id="overview">Overview</h2>
+<p>This module performs advanced vibrational analysis using molecular dynamics trajectory data. It consists of two workflows:</p>
+<ol>
+<li><strong>Vibrational Density of States (VDOS)</strong>: Computed from the power spectrum of the atomic velocities (equivalently, the Fourier transform of the Velocity Autocorrelation Function, VACF).</li>
+<li><strong>Infrared (IR) Spectroscopy</strong>: Computed from the power spectrum of the dipole current <span class="arithmatex">\(\dot{\mathbf{M}}(t)\)</span> (equivalently, the Fourier transform of the Dipole-Derivative Autocorrelation Function, DACF).</li>
+</ol>
+<p>Both workflows share one signal-processing core, offering <strong>two independent, mutually validating spectral estimators</strong>, a decaying lag window, and optional quantum correction factors.</p>
+<hr />
+<h2 id="part-i-vibrational-density-of-states-vdos">Part I: Vibrational Density of States (VDOS)</h2>
+<h3 id="physics-and-methodology">Physics and Methodology</h3>
+<p>The VDOS, <span class="arithmatex">\(g(\omega)\)</span>, represents the distribution of vibrational modes available to the system. It is calculated as the <strong>mass-weighted</strong> velocity power spectrum:</p>
+<div class="arithmatex">\[ g(\nu) = \sum_i m_i \, S_i(\nu), \qquad S_i(\nu) = \text{PSD}\!\left[\mathbf{v}_i(t)\right] \]</div>
+<p>where <span class="arithmatex">\(S_i\)</span> is the one-sided power spectral density of atom <span class="arithmatex">\(i\)</span>'s velocity <strong>vector</strong>, summed over <span class="arithmatex">\(x\)</span>, <span class="arithmatex">\(y\)</span> and <span class="arithmatex">\(z\)</span> with their true relative weights. Equivalently, via the Wiener–Khinchin theorem,</p>
+<div class="arithmatex">\[ g(\nu) \propto \sum_i m_i \int_{-\infty}^{\infty} e^{-i\omega t} \langle \mathbf{v}_i(t) \cdot \mathbf{v}_i(0) \rangle \, dt \]</div>
+<p>The mass weighting is applied <strong>explicitly</strong>. There is no per-atom or per-component normalisation of the autocorrelation function, so the velocity sum rule below remains available as a validation of the entire pipeline.</p>
+<p>The code supports two modes:</p>
+<ul>
+<li><strong>Full Mode</strong>: Sums the mass-weighted velocity power spectrum over all atoms.</li>
+<li><strong>Bond Mode</strong>: Differentiates the scalar bond length of a specified atom pair, which is equivalent to projecting their relative velocity onto the bond unit vector, isolating that bond's stretching modes. (Not mass weighted — it is a single internal coordinate.)</li>
+</ul>
+<h3 id="validation-the-velocity-sum-rule">Validation: the velocity sum rule</h3>
+<p>For a classical system in equilibrium, equipartition gives <span class="arithmatex">\(\langle m_i v_{i\alpha}^2\rangle = k_BT\)</span> for every Cartesian degree of freedom, hence</p>
+<div class="arithmatex">\[ \sum_i m_i \langle v_i^2 \rangle = N_{\text{dof}} \, k_B T \]</div>
+<p>Integrating the mass-weighted PSD must recover the same quantity. <code>vdos.py</code> therefore prints an <strong>effective temperature</strong> <span class="arithmatex">\(T_{\text{eff}}\)</span> obtained from the spectral integral. This is the single most useful check on the whole calculation:</p>
+<ul>
+<li><span class="arithmatex">\(T_{\text{eff}}\)</span> should match your MD thermostat temperature.</li>
+<li>A large mismatch points to a wrong <code>delta_t</code>, a wrong <code>nmeasure</code>, wrong trajectory or velocity units, an incorrect <code>temperature</code> parameter, unaccounted constraints, or poor equilibration.</li>
+<li>With constraints (rigid bonds via SHAKE/RATTLE), subtract the constrained degrees of freedom from <span class="arithmatex">\(N_{\text{dof}}\)</span>. Note that rigid X–H bonds remove the X–H stretch band entirely.</li>
+<li><code>N_dof</code> is reported as <span class="arithmatex">\(3N-3\)</span> when <code>Center_of_mass_correction = True</code>, else <span class="arithmatex">\(3N\)</span>.</li>
+</ul>
+<h3 id="features-vdos-ir">Features (VDOS &amp; IR)</h3>
+<ul>
+<li><strong>Box Inference</strong>: If the input has no cell, each box length is estimated from the median jump of wrapped coordinates between frames, falling back to the coordinate extent when nothing wraps. No minimum box length is imposed.</li>
+<li><strong>Center of Mass (COM) Correction</strong>: Removes the net translational motion of the system to prevent spurious low-frequency peaks. (If not applied, especially for gas-phase molecules/clusters, a massive peak at/near 0 cm⁻¹ caused by translational motion masks true vibrations.)</li>
+<li><strong>PBC Unwrapping</strong>: Unwraps atomic positions across periodic boundaries to ensure continuous trajectories. Essential: a wrapped coordinate produces a delta-function velocity spike at the wrap frame, which spreads white noise across the entire spectrum. Note the unwrapping is per-Cartesian-direction and therefore assumes an <strong>orthorhombic</strong> cell. For NetCDF input the frame-averaged <code>cell_lengths</code> are used whenever positions are differentiated; the output header records whether unwrapping was applied.</li>
+<li><strong>Velocity source</strong>: for VDOS, velocities stored in a NetCDF trajectory are used unless <code>force_numerical = True</code>. Text trajectories (XYZ / LAMMPS dump), and all IR calculations, obtain velocities numerically as <span class="arithmatex">\(\nabla\)</span>(positions). Central differences act as a low-pass filter <span class="arithmatex">\(\mathrm{sinc}(\omega\Delta t)\)</span> — negligible (1.5 % at 4500 cm⁻¹) for <span class="arithmatex">\(\Delta t = 0.25\)</span> fs, but 66 % at an effective <span class="arithmatex">\(\Delta t\)</span> of 2 fs. A warning is printed when the loss exceeds 5 %.</li>
+</ul>
+<h3 id="input-parameters">Input Parameters</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>input_file</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;"><code>traj.xyz</code></td>
+<td style="text-align: left;">Input trajectory (XYZ, LAMMPS dump, or NetCDF). ASE is used for text trajectories and content-sniffs LAMMPS dumps even when named <code>.xyz</code>. Text trajectories must use the <code>.xyz</code> extension: any other extension (e.g. <code>.lammpstrj</code>) is read as NetCDF.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mode</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>full</code></td>
+<td style="text-align: left;">Analysis mode: <code>full</code> (all atoms) or <code>bond</code> (specific pair).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bond_indices</code></td>
+<td style="text-align: left;">Integers</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;"><strong>(Bond Mode Only)</strong> Indices of the two atoms defining the bond (1-based).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>delta_t</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">0.25</td>
+<td style="text-align: left;">Time step between MD frames (femtoseconds).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>spectral_estimator</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>acf</code></td>
+<td style="text-align: left;"><code>acf</code> (Blackman–Tukey) or <code>welch</code> (averaged periodogram). See Part III.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>window_kind</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>Gaussian</code></td>
+<td style="text-align: left;">Window function type (see Windowing Functions).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>window_width_ps</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">1.0</td>
+<td style="text-align: left;"><strong>FWHM</strong> of the Gaussian lag window, in picoseconds. Sets the spectral resolution (~29 cm⁻¹ at 1.0 ps). Only the Gaussian window uses it; Hann, Hamming and Blackman-Harris lag windows always span the full trajectory. It is also the default <code>welch_segment_ps</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>welch_segment_ps</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">= <code>window_width_ps</code></td>
+<td style="text-align: left;"><strong>(<code>welch</code> only)</strong> Segment duration in picoseconds.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>welch_overlap</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">0.5</td>
+<td style="text-align: left;"><strong>(<code>welch</code> only)</strong> Fractional segment overlap, in [0, 1).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>quantum_correction</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><strong><code>False</code></strong></td>
+<td style="text-align: left;">See Quantum Correction. Off by default for VDOS.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>temperature</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">300.0</td>
+<td style="text-align: left;">System temperature (Kelvin), used by the quantum correction and reported against <span class="arithmatex">\(T_{\text{eff}}\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>PBC</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;">Toggles Periodic Boundary Condition handling/unwrapping.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Center_of_mass_correction</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>True</code></td>
+<td style="text-align: left;">Removes global translation from velocity data.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>masses</code></td>
+<td style="text-align: left;">List</td>
+<td style="text-align: left;"><code>C 12.011; H 1.008</code></td>
+<td style="text-align: left;">Atomic masses, e.g. <code>C 12.011; H 1.008</code>. An element present in the trajectory but absent here is a <strong>hard error</strong> — a silent fallback mass would corrupt both the COM correction and the mass weighting.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>force_numerical</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;">If <code>True</code>, recalculates velocities from positions even if velocities are present in the file. Only NetCDF files carry stored velocities.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>nskip</code> / <code>nmeasure</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">0 / 1</td>
+<td style="text-align: left;">Initial frames to skip / downsampling factor.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_min_wavenumber</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">50.0</td>
+<td style="text-align: left;"><strong>Display only.</strong> Lower plot limit (cm⁻¹).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_max_wavenumber</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">4500.0</td>
+<td style="text-align: left;"><strong>Display only.</strong> Upper plot limit (cm⁻¹). Warns if above Nyquist.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>symbols</code></td>
+<td style="text-align: left;">List</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;"><strong>(NetCDF only)</strong> Chemical symbols, one per atom in trajectory order. Required, since NetCDF carries no element information.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>velocity_unit</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>angstrom/ps</code></td>
+<td style="text-align: left;"><strong>(NetCDF only)</strong> Units of <em>stored</em> velocities: <code>angstrom/ps</code> (AMBER convention), <code>angstrom/fs</code>, or <code>angstrom/s</code>. A wrong choice shows up immediately as an absurd <span class="arithmatex">\(T_{\text{eff}}\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>output_data</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;"><code>VDOS.txt</code></td>
+<td style="text-align: left;">Raw spectrum output (see Output metadata).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>output_plot</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;"><code>VDOS.png</code></td>
+<td style="text-align: left;">Plot output; the extension selects the image format.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>dpi</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;"><code>150</code></td>
+<td style="text-align: left;">Plot resolution.</td>
+</tr>
+</tbody>
+</table>
+<p><code>use_normalized_vectors</code> is no longer supported: setting it to <code>True</code> aborts with an explanatory error, because neither <span class="arithmatex">\(|\mathbf{r}|\)</span> nor <span class="arithmatex">\(|\mathbf{v}|\)</span> yields a density of states.</p>
+<hr />
+<h2 id="part-ii-infrared-ir-spectra">Part II: Infrared (IR) Spectra</h2>
+<h3 id="physics-and-methodology_1">Physics and Methodology</h3>
+<p>The IR absorption spectrum is obtained from the autocorrelation of the <strong>dipole current</strong> (dipole derivative) <span class="arithmatex">\(\dot{\mathbf{M}}(t) \equiv \mathbf{J}(t)\)</span>:</p>
+<div class="arithmatex">\[ I(\nu) \propto \int_{-\infty}^{\infty} e^{-i\omega t} \langle \dot{\mathbf{M}}(t) \cdot \dot{\mathbf{M}}(0) \rangle \, dt \]</div>
+<div class="arithmatex">\[ \mathbf{J}(t) = \sum_{i} q_i(t)\, \mathbf{v}_i(t) \; + \; \sum_{i} \dot{q}_i(t)\, \mathbf{r}_i(t) \]</div>
+<p>Correlating the dipole <strong>derivative</strong> rather than the dipole itself is deliberate and important:</p>
+<ul>
+<li>Velocities are independent of the periodic-image choice, whereas <span class="arithmatex">\(\sum_i q_i \mathbf{r}_i\)</span> is not. This is what makes the spectrum well defined under PBC.</li>
+<li>It supplies the <span class="arithmatex">\(\omega^2\)</span> weighting that IR absorption requires, since <span class="arithmatex">\(S_{\dot M}(\omega) = \omega^2 S_M(\omega)\)</span>.</li>
+</ul>
+<p>The three Cartesian components of <span class="arithmatex">\(\mathbf{J}\)</span> are combined into <strong>one</strong> vector correlation / PSD with their true relative weights. They are never normalised independently — doing so forces <span class="arithmatex">\(C_\alpha(0)=1\)</span> for each and destroys both the polarisation weighting and the absolute intensity.</p>
+<ul>
+<li><strong>Static Charge Mode</strong>: constant charges, so <span class="arithmatex">\(\dot q = 0\)</span> and the second term vanishes. <span class="arithmatex">\(\mathbf{J}(t) = \sum_i q_i \mathbf{v}_i(t)\)</span>.</li>
+<li><strong>Dynamic Charge Mode</strong>: charges read per frame from a LAMMPS dump <code>q</code> column; <span class="arithmatex">\(\dot q\)</span> obtained by a Savitzky–Golay derivative filter.</li>
+</ul>
+<blockquote>
+<p><strong>Limitation of static charges.</strong> Fixed charges omit charge flux, which for C–H stretches is comparable in magnitude to the <span class="arithmatex">\(q\mathbf{v}\)</span> term. <strong>Peak positions are reliable; relative IR intensities from a fixed-charge model are qualitative only.</strong> Choose <code>static_charges</code> from the force field that produced the MD, not by hand.</p>
+<p><strong>Note on the dynamic <span class="arithmatex">\(\dot q \mathbf{r}\)</span> term.</strong> It is origin- and periodic-image-dependent, so it is physically meaningful only for a non-periodic system or a single unwrapped molecule.</p>
+</blockquote>
+<h3 id="charge-neutrality">Charge neutrality</h3>
+<p><code>static_charges</code> are validated <strong>after</strong> assignment against <code>charge_tolerance</code>. A non-zero total charge contaminates <span class="arithmatex">\(\mathbf{J} = \sum_i q_i \mathbf{v}_i\)</span> with overall translation: the COM correction enforces <span class="arithmatex">\(\sum_i m_i \mathbf{v}_i = 0\)</span>, <strong>not</strong> <span class="arithmatex">\(\sum_i \mathbf{v}_i = 0\)</span>, so with unequal masses the net-charge term does not cancel. The composition, per-element subtotals and total charge are printed every run.</p>
+<h3 id="input-parameters_1">Input Parameters</h3>
+<p>In addition to the shared parameters above (<code>spectral_estimator</code>, <code>window_kind</code>, <code>window_width_ps</code>, <code>welch_*</code>, <code>plot_*_wavenumber</code>, <code>delta_t</code>, <code>nskip</code>, <code>nmeasure</code>, <code>PBC</code>, <code>Center_of_mass_correction</code>, <code>masses</code>, <code>temperature</code>):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>charge_mode</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>static</code></td>
+<td style="text-align: left;"><code>static</code> or <code>dynamic</code>. Dynamic mode needs a LAMMPS custom dump with a <code>q</code> column.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>static_charges</code></td>
+<td style="text-align: left;">Dictionary</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Charges for static mode, e.g. <code>C -0.117; H 0.06</code> (neutral for the C₂₀H₃₉ example trajectory). Every element in the trajectory must appear, otherwise it is silently invisible to the dipole current.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>charge_tolerance</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">1e-6</td>
+<td style="text-align: left;">Maximum allowed <span class="arithmatex">\(\lvert\sum_i q_i\rvert\)</span> in units of <em>e</em>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>charge_tolerance_fatal</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;"><code>True</code> aborts instead of warning when the tolerance is exceeded.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>quantum_correction</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>True</code></td>
+<td style="text-align: left;">Applies the <strong>harmonic</strong> QCF exactly once.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>dqdt_savgol_window</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;"><code>5</code></td>
+<td style="text-align: left;"><strong>(Dynamic mode only)</strong> Savitzky–Golay window, in frames, for the <span class="arithmatex">\(\dot q\)</span> derivative. Must be odd and at least 5.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ir_output</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;"><code>ir_spectrum.txt</code></td>
+<td style="text-align: left;">Raw spectrum output (see Output metadata).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ir_plot</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;"><code>ir_spectrum.png</code></td>
+<td style="text-align: left;">Plot output file.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>dpi</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;"><code>300</code></td>
+<td style="text-align: left;">Plot resolution.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>dqdt_savgol_window</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;"><strong>(dynamic only)</strong> Savitzky–Golay window length (odd, ≥ 5) for <span class="arithmatex">\(\dot q\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ir_output</code> / <code>ir_plot</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;"><code>ir_spectrum.txt</code> / <code>.png</code></td>
+<td style="text-align: left;">Output data and figure.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="part-iii-signal-processing-corrections">Part III: Signal Processing &amp; Corrections</h2>
+<h3 id="spectral-estimators-spectral_estimator">Spectral estimators (<code>spectral_estimator</code>)</h3>
+<p>Both estimators return a <strong>one-sided power spectral density on the same physical scale</strong>, so they can be compared directly on the same trajectory and should agree to within their statistical error. Running both is a good cross-check.</p>
+<h4 id="acf-blackmantukey-default"><code>acf</code> — Blackman–Tukey (default)</h4>
+<ol>
+<li>
+<p><strong>Biased, mean-centred vector ACF</strong>, summed over Cartesian components:</p>
+<div class="arithmatex">\[ C(k) = \frac{1}{N}\sum_{\alpha}\sum_{n} x_\alpha(n)\,x_\alpha(n+k) \]</div>
+<p>The <strong>biased</strong> (<span class="arithmatex">\(1/N\)</span>) divisor is used deliberately, not <span class="arithmatex">\(1/(N-k)\)</span>. The biased estimator is positive semi-definite — its full-lag transform is exactly the periodogram — so the resulting spectrum cannot go negative. The unbiased <span class="arithmatex">\(1/(N-k)\)</span> estimator has no such property, has large variance at long lag (where only a handful of samples contribute), and can produce negative spectral density.</p>
+</li>
+<li>
+<p><strong>Decaying lag window</strong> <span class="arithmatex">\(w\)</span> with <span class="arithmatex">\(w(0)=1\)</span>, applied to the one-sided ACF.</p>
+</li>
+<li>
+<p><strong>Transform</strong>:</p>
+<div class="arithmatex">\[ S_1(\nu) = 2\,\Delta t \left( 2\,\mathrm{Re}\!\left[\mathrm{rFFT}(Cw)\right] - C(0)w(0) \right) \]</div>
+<p>with the DC and Nyquist bins un-doubled, and <span class="arithmatex">\(n_{\text{fft}} \ge 2N-1\)</span> to avoid circular wrap-around.</p>
+</li>
+</ol>
+<h4 id="welch-averaged-modified-periodogram"><code>welch</code> — averaged modified periodogram</h4>
+<p>The trajectory is split into overlapping segments; each is mean-centred (<code>detrend='constant'</code>), multiplied by a <strong>centred</strong> signal window, transformed, and the periodograms are averaged (Welch, <em>IEEE Trans. Audio Electroacoust.</em> <strong>15</strong>, 70 (1967)). The window is applied <strong>per segment by <code>scipy.signal.welch</code></strong>; the series is never pre-multiplied by a window.</p>
+<h4 id="choosing-between-them">Choosing between them</h4>
+<p>At matched resolution the two have comparable statistical variance (Welch's advantage measures ~1.3× in variance, i.e. ~12 % in standard error). Practical differences:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"></th>
+<th style="text-align: left;"><code>acf</code></th>
+<th style="text-align: left;"><code>welch</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Frequency grid</td>
+<td style="text-align: left;">Fine (zero-padded; interpolation, not extra information)</td>
+<td style="text-align: left;">Coarser, set by segment length</td>
+</tr>
+<tr>
+<td style="text-align: left;">Low frequencies</td>
+<td style="text-align: left;">Retains content down to <span class="arithmatex">\(1/T_{\text{traj}}\)</span></td>
+<td style="text-align: left;">Per-segment detrending suppresses content below <span class="arithmatex">\(1/T_{\text{seg}}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Non-negativity</td>
+<td style="text-align: left;">Guaranteed with a Gaussian lag window</td>
+<td style="text-align: left;">Always guaranteed</td>
+</tr>
+<tr>
+<td style="text-align: left;">Speed</td>
+<td style="text-align: left;">Slower</td>
+<td style="text-align: left;">Faster</td>
+</tr>
+</tbody>
+</table>
+<p>Both are reported with their <strong>bin spacing</strong> and their <strong>effective resolution</strong> (the measured FWHM of the spectral window). These are different numbers: zero padding makes the bin spacing finer without adding information.</p>
+<h3 id="windowing-functions-window_kind">Windowing Functions (<code>window_kind</code>)</h3>
+<p>Finite truncation of the correlation function introduces spectral leakage. A window is applied to suppress it.</p>
+<p><strong>Critically, the <code>acf</code> route requires a <em>lag</em> window, not a signal window</strong>: a monotonically decaying function with <span class="arithmatex">\(w(0)=1\)</span>, built here as the second half of the corresponding symmetric window. Every <code>scipy.signal.windows.*</code> function is <em>centre-peaked</em>; applying one directly to a one-sided ACF suppresses the zero-lag region — where most of the correlation information lives — while amplifying the noisy long-lag tail.</p>
+<ul>
+<li><strong>Gaussian</strong> (Default, recommended): configurable width (<code>window_width_ps</code>, interpreted as FWHM). It is the only supported window whose <em>spectral</em> window is non-negative, which guarantees <span class="arithmatex">\(S(\nu)\ge 0\)</span>.</li>
+<li><strong>Blackman-Harris</strong>: strongest sidelobe suppression, at the cost of broader peaks.</li>
+<li><strong>Hamming</strong>: good general-purpose window.</li>
+<li><strong>Hann</strong>: raised cosine; good balance between main-lobe width and sidelobe suppression.</li>
+</ul>
+<p>Hann, Hamming and Blackman-Harris lag windows have small negative spectral sidelobes and can in principle produce slightly negative values.</p>
+<h3 id="quantum-correction">Quantum Correction</h3>
+<p>A Quantum Correction Factor (QCF) reweights the classical spectrum. <strong>The correct factor depends on which quantity you are computing</strong>, and it is applied exactly once, to the raw spectrum.</p>
+<h4 id="ir-irpy-the-harmonic-qcf">IR (<code>IR.py</code>) — the harmonic QCF</h4>
+<p>For an IR spectrum from the classical dipole-current ACF:</p>
+<div class="arithmatex">\[ Q_{\text{harm}}(\omega) = \frac{\beta\hbar\omega}{1-e^{-\beta\hbar\omega}} = \frac{x}{1-e^{-x}}, \qquad x=\frac{\hbar\omega}{k_BT} \]</div>
+<p>It satisfies detailed balance, is exact when the observable is linear in harmonic coordinates, and grows only <strong>linearly</strong> in <span class="arithmatex">\(x\)</span>. Ramírez, López-Ciudad, Kumar &amp; Marx (<em>J. Chem. Phys.</em> <strong>121</strong>, 3973 (2004)) compare QCFs for classical correlation functions and find the harmonic form performs best across most of their test cases. Implemented as <code>x / -expm1(-x)</code> for numerical stability, with the exact limit <span class="arithmatex">\(Q\to 1\)</span> as <span class="arithmatex">\(x\to 0\)</span>.</p>
+<h4 id="vdos-vdospy-off-by-default">VDOS (<code>vdos.py</code>) — off by default</h4>
+<p>A density of states is a property of the vibrational modes, not of their thermal population, so the classical VACF spectrum <strong>already is</strong> the VDOS. <code>quantum_correction</code> therefore defaults to <code>False</code>.</p>
+<p>Setting it <code>True</code> applies the quantum/classical kinetic-energy ratio</p>
+<div class="arithmatex">\[ Q_{\text{KE}}(\omega) = \frac{x}{2}\coth\!\left(\frac{x}{2}\right) \]</div>
+<p>which turns the output into a <strong>quantum kinetic-energy-weighted vibrational spectrum — not a density of states</strong>. The output file, plot title and metadata are relabelled accordingly.</p>
+<h3 id="nyquist-limit">Nyquist limit</h3>
+<p>The highest physically representable wavenumber is</p>
+<div class="arithmatex">\[ \tilde\nu_{\text{Nyq}} = \frac{1}{2 c\, \Delta t_{\text{eff}}}, \qquad \Delta t_{\text{eff}} = \Delta t \times \texttt{nmeasure} \]</div>
+<p>which is 66,713 cm⁻¹ for <span class="arithmatex">\(\Delta t_{\text{eff}} = 0.25\)</span> fs and 8,339 cm⁻¹ for 2 fs. A warning is issued if <code>plot_max_wavenumber</code> exceeds it. Note that <code>nmeasure &gt; 1</code> reduces this limit proportionally, and that the effective timestep is used consistently for the velocity derivative, the frequency axis <strong>and</strong> the lag-window construction.</p>
+<h3 id="statistical-uncertainty">Statistical uncertainty</h3>
+<p><code>IR.py</code> reports the equivalent degrees of freedom <span class="arithmatex">\(\nu\)</span> and the approximate relative error <span class="arithmatex">\(\sqrt{2/\nu}\)</span> on band intensities. A dipole-current spectrum has only three Cartesian components to average over, whereas a VDOS averages over <span class="arithmatex">\(3N\)</span> atomic degrees of freedom, so <strong>IR intensities converge far more slowly than the VDOS</strong>. For a 5 ps trajectory at ~29 cm⁻¹ resolution the IR band error is roughly 20 %.</p>
+<p>This is set by the trajectory length and the resolution you request — <strong>not</strong> by the estimator, which changes it by only ~12 %. The remedies are longer production trajectories, several independent trajectories, or block averaging with reported confidence intervals.</p>
+<h3 id="output-metadata">Output metadata</h3>
+<p>Every output file carries a header recording: estimator, spectrum content (raw / quantum-weighted), velocity source, effective timestep, frames used, window kind and role, window/segment duration, overlap and segment count (or lags and <code>nfft</code>), bin spacing, effective resolution, Nyquist limit, quantum-correction choice, temperature, mass weighting, COM and PBC settings, masses, and — for VDOS — the sum-rule <span class="arithmatex">\(T_{\text{eff}}\)</span>; for IR — charge mode, static charges, total charge and the estimated relative error.</p>
+<p>The saved <code>.txt</code> is always the <strong>raw, unfiltered</strong> spectrum over the full frequency range. <code>plot_min_wavenumber</code> / <code>plot_max_wavenumber</code> affect the <strong>plot only</strong>.</p>
+<h3 id="workflow-structure">Workflow Structure</h3>
+<ol>
+<li><strong>Input Reading</strong>: XYZ (via ASE) and LAMMPS dump; NetCDF for VDOS only.</li>
+<li><strong>Preprocessing</strong>: box-size inference, <code>nskip</code> / <code>nmeasure</code>, COM correction, PBC unwrapping.</li>
+<li><strong>Signal construction</strong>: <span class="arithmatex">\(\mathbf{v}_i(t)\)</span>, or <span class="arithmatex">\(\mathbf{J}(t)=\sum_i q_i\mathbf{v}_i(t)\)</span> for IR (with charge-neutrality validation).</li>
+<li><strong>Spectral estimation</strong>: <code>acf</code> (biased vector ACF + decaying lag window + <span class="arithmatex">\(2\mathrm{Re}[\cdot]-C(0)w(0)\)</span>) or <code>welch</code>.</li>
+<li><strong>Weighting</strong>: explicit mass weighting (VDOS); quantum correction applied once, if enabled.</li>
+<li><strong>Validation</strong>: velocity sum rule / <span class="arithmatex">\(T_{\text{eff}}\)</span> (VDOS), statistical uncertainty (IR).</li>
+<li><strong>Output</strong>: raw data with full metadata (<code>.txt</code>) and a display-filtered plot (<code>.png</code>).</li>
+</ol>
+<hr />
+<h2 id="notes">Notes</h2>
+<ol>
+<li><strong>Sampling Frequency</strong>: To capture high-frequency modes such as the O–H stretch near 3600 cm⁻¹, the saved-frame interval must resolve the oscillation period (~9–10 fs). By Nyquist the sampling frequency must exceed twice the highest frequency of interest. A <span class="arithmatex">\(\Delta t\)</span> of 0.5 fs gives a Nyquist limit of 33,356 cm⁻¹, well beyond the vibrational range. Remember that <code>nmeasure</code> multiplies the effective interval.</li>
+<li><strong>Trajectory Sorting</strong>: The module assumes the input trajectory is <strong>SORTED</strong> by atom ID (e.g. <code>dump_modify sort id</code> in LAMMPS) so atom indexing is consistent across frames.</li>
+<li><strong>Trajectory File Format</strong>: The file must contain atom types. Cell boundaries are used if present, otherwise inferred. Note that PBC unwrapping assumes an orthorhombic cell.</li>
+</ol>
+<p>For files containing cell boundaries, generate a trajectory in LAMMPS with:</p>
+<pre><code>dump            3 all custom 1 ./traj-custom.xyz element x y z
+dump_modify     3 element C H
+dump_modify     3 sort id
+</code></pre>
+<p>Add <code>q</code> to the column list if you intend to use <code>charge_mode = dynamic</code>:</p>
+<pre><code>dump            3 all custom 1 ./traj-custom.xyz element x y z q
+</code></pre>
+<p>Static mode does <strong>not</strong> require a <code>q</code> column. This produces:</p>
+<pre><code>ITEM: TIMESTEP
+10454
+ITEM: NUMBER OF ATOMS
+59
+ITEM: BOX BOUNDS pp pp pp
+-5.7149802856090802e-02 1.9105149802856097e+01
+-4.1130782525593386e-02 9.9651307825256445e+00
+-2.7455019341267265e-02 9.2234550193412659e+00
+ITEM: ATOMS element x y z
+C 11.2212 3.17918 8.8797
+C 12.7296 2.80591 8.81307
+H 11.6504 4.87653 1.00421
+</code></pre>
+<p>If cell boundaries are not available they are inferred automatically, and the file can be generated with:</p>
+<pre><code>dump            2 all xyz 1 ./traj.xyz
+dump_modify     2 element C H
+dump_modify     2 sort id
+</code></pre>
+<p>giving standard XYZ:</p>
+<pre><code>59
+Atoms. Timestep: 10454
+C 11.2212 3.17918 8.8797
+C 12.7296 2.80591 8.81307
+C 10.8122 4.47872 0.365524
+H 11.6504 4.87653 1.00421
+</code></pre>
+<hr />
+<h2 id="recommended-validation-sequence">Recommended validation sequence</h2>
+<ol>
+<li>Run <code>vdos.py</code> and check the reported <span class="arithmatex">\(T_{\text{eff}}\)</span> against your thermostat temperature. Set <code>temperature</code> to the true value — it feeds the QCF.</li>
+<li>Run each script twice, once with <code>spectral_estimator = acf</code> and once with <code>welch</code>. Peak positions should agree to within the reported resolution, and integrated band intensities to within the reported statistical error.</li>
+<li>Confirm the printed total charge is zero within <code>charge_tolerance</code> before trusting any IR intensity.</li>
+<li>Check that <code>plot_max_wavenumber</code> is below the reported Nyquist limit and that no velocity-attenuation warning is printed.</li>
+</ol></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

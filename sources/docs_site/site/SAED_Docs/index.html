@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>SAED - VCL Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">VCL Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Input_Converter_Docs/" class="nav-link">Input Converter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">SAED</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Structure_Analyzer_Docs/" class="nav-link">Structure Analyzer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Vibrational_Analysis_Docs/" class="nav-link">Vibrational Analysis</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../XRD_Docs/" class="nav-link">XRD</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../Input_Converter_Docs/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Structure_Analyzer_Docs/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#saed-analysis-module" class="nav-link">SAED Analysis Module</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#physics-and-methodology" class="nav-link">Physics and Methodology</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#part-i-diffraction-calculation" class="nav-link">Part I: Diffraction Calculation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#part-ii-visualization" class="nav-link">Part II: Visualization</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#notes" class="nav-link">Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="saed-analysis-module">SAED Analysis Module</h1>
+<h2 id="overview">Overview</h2>
+<p>This module simulates <strong>Selected Area Electron Diffraction (SAED)</strong> patterns from atomic structures. It employs a kinematic diffraction approximation to calculate the diffraction intensity in reciprocal space and generates visual representations of the patterns. This workflow is essential for linking atomic-scale simulations with experimental TEM (Transmission Electron Microscopy) observations.</p>
+<p>The process consists of two stages:</p>
+<ol>
+<li><strong>Diffraction Calculation</strong>: Computes the 3D reciprocal space intensity grid.</li>
+<li><strong>Pattern Visualization</strong>: Slices the 3D data at the Ewald-sphere intersection to generate 2D diffraction images.</li>
+</ol>
+<hr />
+<h2 id="physics-and-methodology">Physics and Methodology</h2>
+<p>The diffraction intensity <span class="arithmatex">\(I(\mathbf{k})\)</span> at a reciprocal lattice vector <span class="arithmatex">\(\mathbf{k}\)</span> is calculated using the kinematic scattering theory:</p>
+<div class="arithmatex">\[
+I(\mathbf{k}) =
+\frac{1}{N}
+\left|
+\sum_{j=1}^{N}
+f_j(s)
+\exp\left(2\pi i\,\mathbf{k}\cdot\mathbf{r}_j\right)
+\right|^2
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(N\)</span> is the number of atoms; the calculated intensity is normalized by <span class="arithmatex">\(N\)</span>.</li>
+<li><span class="arithmatex">\(\mathbf{r}_j\)</span> is the Cartesian position of atom <span class="arithmatex">\(j\)</span>.</li>
+<li><span class="arithmatex">\(f_j(s)\)</span> is the atomic scattering factor for electrons.</li>
+<li><span class="arithmatex">\(s=\sin\theta/\lambda=|\mathbf{k}|/2\)</span> is the scattering-factor variable.</li>
+</ul>
+<p>The electron scattering factor is evaluated as:</p>
+<div class="arithmatex">\[
+f_j(s)
+=
+\sum_{C=1}^{5}
+a_C
+\exp(-b_Cs^2)
+\]</div>
+<p><strong>References:</strong></p>
+<ul>
+<li>(Coleman) Coleman, Spearot, Capolungo, <em>MSMSE</em>, 21, 055020 (2013).</li>
+<li>(Brown) Brown et al. <em>International Tables for Crystallography Volume C: Mathematical and Chemical Tables</em>, 554-95 (2004).</li>
+<li>(Fox) Fox, O’Keefe, Tabbernor, <em>Acta Crystallogr. A</em>, 45, 786-93 (1989).</li>
+</ul>
+<h3 id="automated-cell-boundary-detection">Automated Cell &amp; Boundary Detection</h3>
+<p>The module includes features to handle various input formats (e.g., standard XYZ files which often lack cell information):</p>
+<ul>
+<li><strong>Automatic Cell Inference</strong>: If cell information is unavailable, the code may estimate an orthogonal coordinate-span box from the global minimum and maximum atomic positions (<span class="arithmatex">\(\mathbf{r}_{max} - \mathbf{r}_{min}\)</span>). For periodic calculations, provide the actual simulation cell; the inferred box is not a physical substitute for the periodic cell.</li>
+<li>
+<p><strong>Periodic Boundary Conditions (PBC)</strong>: Users can explicitly set PBCs. In automatic mode, reciprocal mesh spacing is determined from the simulation-cell dimensions:</p>
+<div class="arithmatex">\[
+\Delta k_i
+=
+\frac{c_i}{L_i}.
+\]</div>
+</li>
+</ul>
+<h3 id="mesh-size-limit">Mesh Size Limit</h3>
+<p>The mesh holds every node with <span class="arithmatex">\(|\mathbf{k}| &lt; k_{max}\)</span> (and, for a nonzero <code>zone</code>, inside the Ewald-sphere shell), with <span class="arithmatex">\(N_i=\lceil k_{max}/\Delta k_i\rceil\)</span> nodes on each side of the origin. Because <span class="arithmatex">\(\Delta k_i=c_i/L_i\)</span>, its size grows as <span class="arithmatex">\((k_{max}L/c)^3\)</span>. Before the mesh is built, the number of nodes is estimated as</p>
+<div class="arithmatex">\[
+N_{\mathrm{est}}
+=
+\frac{\pi}{6}
+\prod_{i=1}^{3}\left(2N_i+1\right)
+\min\left(1,\ \frac{6\delta}{k_{max}}\right),
+\]</div>
+<p>where the last factor is dropped for <code>zone = 0,0,0</code>. If <span class="arithmatex">\(N_{\mathrm{est}}\)</span> exceeds <code>max_mesh_nodes</code>, the run stops with an error that reports the estimated node count and memory (about 20 bytes per node) and how to reduce them: set a zone axis, increase <code>c</code>, or reduce <code>kmax</code>. A full reciprocal volume on a fine mesh is the usual cause: for <code>example_files/tem/screw.xyz</code> (box ≈ 30 Å), <code>zone = 0,0,0</code> with <code>c = 0.05</code> gives <span class="arithmatex">\(N_{\mathrm{est}}\approx 4.7\times10^{9}\)</span> nodes (≈ 94 GB) and is refused, while <code>zone = 0,0,1</code> with <code>c = 0.2</code> gives <span class="arithmatex">\(N_{\mathrm{est}}\approx 2.6\times10^{6}\)</span>. The GUI default <code>c = 0.025</code> on the same box gives <span class="arithmatex">\(N_{\mathrm{est}}\approx 1.2\times10^{9}\)</span> (≈ 23 GB), which is why the GUI ships <code>max_mesh_nodes = 1500000000</code>: the fine mesh is deliberate, so the guard is set above it rather than stopping it. Lower the limit if that is not memory you have.</p>
+<hr />
+<h2 id="part-i-diffraction-calculation">Part I: Diffraction Calculation</h2>
+<p>This step generates a standard VTK file containing the 3D diffraction intensity.</p>
+<h3 id="input-parameters">Input Parameters</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>structure_file</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;">Required</td>
+<td style="text-align: left;">Path to the atomic structure (XYZ, LAMMPS data, etc.).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vtk_base</code></td>
+<td style="text-align: left;">String</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Base filename for VTK output. The output is written as <code>&lt;vtk_base&gt;_&lt;vtk_index&gt;.vtk</code>. The value is taken literally (no number or boolean conversion).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vtk_index</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">Integer appended to the VTK output filename.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>wavelength</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">0.0251</td>
+<td style="text-align: left;">Electron wavelength in Ångstroms (e.g., 0.0251 Å for 200 keV).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>atom_types</code></td>
+<td style="text-align: left;">List</td>
+<td style="text-align: left;">Required</td>
+<td style="text-align: left;">List of elements in the file (e.g., <code>Al, O</code>). Must match the structure.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>kmax</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">1.70</td>
+<td style="text-align: left;">Maximum reciprocal distance (<span class="arithmatex">\(Å^{-1}\)</span>) to compute. Determines the Field of View.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>drewald</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">0.005</td>
+<td style="text-align: left;">Half-thickness <span class="arithmatex">\(\delta\)</span> of the Ewald-sphere shell in <span class="arithmatex">\(Å^{-1}\)</span>. For a nonzero <code>zone</code>, reciprocal nodes satisfying <span class="arithmatex">\(R_{\mathrm{Ewald}}-\delta &lt; r &lt; R_{\mathrm{Ewald}}+\delta\)</span> are retained.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>zone</code></td>
+<td style="text-align: left;">Vector</td>
+<td style="text-align: left;">1,0,0</td>
+<td style="text-align: left;">Zone axis orientation. Use <code>0,0,0</code> to compute the full 3D reciprocal volume.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>c</code></td>
+<td style="text-align: left;">Vector</td>
+<td style="text-align: left;">1,1,1</td>
+<td style="text-align: left;">Reciprocal-mesh scaling factors. In automatic mode, <span class="arithmatex">\(\Delta k_i=c_i/L_i\)</span>. In manual mode, <span class="arithmatex">\(\Delta k_i=c_i\)</span> in <span class="arithmatex">\(Å^{-1}\)</span>. Lower values create a finer mesh and increase computational cost. The module default is <code>1,1,1</code>, the LAMMPS default; the GUI ships <code>0.025,0.025,0.025</code>, which is much finer and needs a correspondingly high <code>max_mesh_nodes</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>manual</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;">False</td>
+<td style="text-align: left;">If <code>True</code>, sets <span class="arithmatex">\(\Delta k_i=c_i\)</span> independently of the simulation cell. For non-periodic clusters.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>prd</code></td>
+<td style="text-align: left;">Vector</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Box dimensions in Å. In manual mode, the reciprocal mesh is determined by <code>c</code>; <code>prd</code> does not change <span class="arithmatex">\(\Delta k_i\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pbc</code></td>
+<td style="text-align: left;">Boolean List</td>
+<td style="text-align: left;">1,1,1</td>
+<td style="text-align: left;">Periodic flags (<span class="arithmatex">\(x\)</span>, <span class="arithmatex">\(y\)</span>, <span class="arithmatex">\(z\)</span>). When supplied in the input file, these values override periodicity information read from the structure file. Set to <code>0</code> for non-periodic directions.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>engine</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>auto</code></td>
+<td style="text-align: left;">Structure-factor kernel: <code>auto</code> (numba if installed, else numpy), <code>numba</code> (multi-threaded), <code>numpy</code> (vectorized, no extra dependency) or <code>reference</code> (literal per-point transcription; slowest, for auditing). All engines give identical results for every physically significant intensity. The command-line option <code>--engine</code> overrides this key.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>chunk_size</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;"><code>65536</code></td>
+<td style="text-align: left;">Reciprocal mesh points per kernel chunk. Lower it to reduce memory use.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mesh_engine</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>vectorized</code></td>
+<td style="text-align: left;">Reciprocal-mesh construction: <code>vectorized</code> or <code>reference</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mesh_check</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;">Cross-checks the vectorized mesh against the reference construction (also <code>--mesh-check</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_mesh_nodes</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;"><code>200000000</code></td>
+<td style="text-align: left;">Upper limit on the estimated number of reciprocal-mesh nodes (see <a href="#mesh-size-limit">Mesh Size Limit</a>). Above it the run stops before the mesh is built. <code>0</code> disables the check. The GUI ships <code>1500000000</code> to match its finer default <code>c</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>output_file</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Optional plain-text intensity listing (<code>i j k intensity</code>, one line per mesh point). Written only when set; it can become very large on fine meshes.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>echo</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;">Print progress and diagnostic information.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="part-ii-visualization">Part II: Visualization</h2>
+<p>This step converts the 3D VTK output into a high-quality 2D image (PNG, JPEG, TIFF, BMP, PPM, RGB or PostScript). It performs a spherical slice operation to simulate the intersection of the Ewald sphere with the reciprocal lattice.</p>
+<h3 id="input-parameters_1">Input Parameters</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>vtk_file</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;">Required</td>
+<td style="text-align: left;">The VTK output file from the diffraction calculation step.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>output_file</code></td>
+<td style="text-align: left;">Filename</td>
+<td style="text-align: left;"><code>saed.png</code></td>
+<td style="text-align: left;">Output image file. The extension selects the format: <code>.png</code> (also used when there is no extension), <code>.jpg</code>/<code>.jpeg</code>, <code>.tif</code>/<code>.tiff</code>, <code>.bmp</code>, <code>.ppm</code>, <code>.rgb</code> or <code>.ps</code>; other extensions are rejected. The image is saved under exactly this name.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>visit_path</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;">Optional</td>
+<td style="text-align: left;">Path to the VisIt executable (quotes allowed). If omitted or not found, VisIt is auto-detected, e.g. <code>visit</code> on the PATH.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>iso_lower</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">Lower Isovolume threshold. Use <code>0</code> to remove VTK ghost values written as <code>-1</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>iso_upper</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>1e+37</code></td>
+<td style="text-align: left;">Upper Isovolume threshold.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pseudocolor_min</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>1</code></td>
+<td style="text-align: left;">Lower intensity value for the logarithmic pseudocolor scale.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pseudocolor_max</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">Automatic</td>
+<td style="text-align: left;">Upper intensity value for the logarithmic pseudocolor scale. Leave unset to let VisIt choose the maximum.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>view_normal</code></td>
+<td style="text-align: left;">Vector</td>
+<td style="text-align: left;"><code>-1,0,0</code></td>
+<td style="text-align: left;">Normal vector for the camera view.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>view_up</code></td>
+<td style="text-align: left;">Vector</td>
+<td style="text-align: left;"><code>0,1,0</code></td>
+<td style="text-align: left;">"Up" vector for image orientation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sphere_radius</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>39.84063</code></td>
+<td style="text-align: left;">Radius of the Ewald sphere, <span class="arithmatex">\(1/\lambda\)</span> in <span class="arithmatex">\(Å^{-1}\)</span>. The default corresponds to <span class="arithmatex">\(\lambda=0.0251\)</span> Å; change it together with <code>wavelength</code> and <code>sphere_origin</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sphere_origin</code></td>
+<td style="text-align: left;">Vector</td>
+<td style="text-align: left;">Depends on wavelength and zone axis</td>
+<td style="text-align: left;">Center of the Ewald sphere slice. <br> Example for <span class="arithmatex">\(\lambda=0.0251\)</span> along x-axis: <code>39.84063, 0, 0</code> <br> <code>sphere_origin = 39.84063, 0, 0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>resolution</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;"><code>1200</code></td>
+<td style="text-align: left;">Width and height of the output image in pixels.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>show_3d_axes</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;">Toggles 3D axes in the final image.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>show_2d_axes</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;">Toggles 2D axes in the final image.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>show_user_info</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;">Toggles user-information annotation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>show_database_info</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;">Toggles database-information annotation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>show_legend</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>True</code></td>
+<td style="text-align: left;">Toggles the pseudocolor intensity legend.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="notes">Notes</h2>
+<p>This module generally follows the methodology of the <a href="https://docs.lammps.org/compute_saed.html">LAMMPS compute saed</a> command. Users can consult the corresponding LAMMPS documentation for more detailed background information.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

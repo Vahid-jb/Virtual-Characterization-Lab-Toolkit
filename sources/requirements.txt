@@ -1,0 +1,16 @@
+pyside6
+numpy
+scipy
+ase
+matplotlib
+pyinstaller
+mkdocs 
+mkdocs-material
+ovito==3.14.1
+pymatgen
+spglib
+mpi4py
+periodictable
+psutil
+scikit-learn
+qtawesome

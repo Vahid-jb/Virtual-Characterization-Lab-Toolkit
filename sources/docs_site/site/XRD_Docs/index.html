@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>XRD - VCL Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">VCL Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Input_Converter_Docs/" class="nav-link">Input Converter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../SAED_Docs/" class="nav-link">SAED</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Structure_Analyzer_Docs/" class="nav-link">Structure Analyzer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Vibrational_Analysis_Docs/" class="nav-link">Vibrational Analysis</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">XRD</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../Vibrational_Analysis_Docs/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#xrd-analysis-module" class="nav-link">XRD Analysis Module</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#part-i-xrd-reciprocalsum" class="nav-link">Part I: XRD-ReciprocalSum</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#notes" class="nav-link">Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#part-ii-xrd-kinematical" class="nav-link">Part II: XRD-Kinematical</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#notes_1" class="nav-link">Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#part-iii-xrd-debye-scattering" class="nav-link">Part III: XRD-Debye Scattering</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#summary-of-use-cases" class="nav-link">Summary of Use Cases</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#notes_2" class="nav-link">Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="xrd-analysis-module">XRD Analysis Module</h1>
+<h2 id="overview">Overview</h2>
+<p>This module provides three distinct methodologies for computing X-ray Diffraction (XRD) patterns, catering to different system types (crystals, non-periodic clusters, large systems) and accuracy requirements.</p>
+<ol>
+<li><strong>XRD-ReciprocalSum</strong>: Direct reciprocal-space summation, intended primarily for periodic crystals.</li>
+<li><strong>XRD-Kinematical</strong>: Crystallographic periodic-unit-cell approach with advanced corrections such as Debye–Waller damping, absorption, instrument broadening, and indexed output.</li>
+<li><strong>Debye Scattering</strong>: Pairwise scattering calculation for finite non-periodic nanoparticles, clusters, amorphous structures, liquids, or extracted defective regions. It supports anomalous scattering.</li>
+</ol>
+<hr />
+<h2 id="part-i-xrd-reciprocalsum">Part I: XRD-ReciprocalSum</h2>
+<h3 id="physics-and-methodology">Physics and Methodology</h3>
+<p>This method calculates diffraction intensity by summing atomic scattering factors over reciprocal-space vectors defined by the simulation box. It follows the reciprocal-space convention and intensity normalization used by the LAMMPS <code>compute xrd</code> command.</p>
+<p>The reciprocal vector is:</p>
+<div class="arithmatex">\[
+\mathbf{K}
+=
+(i\Delta K_x,\;j\Delta K_y,\;k\Delta K_z)
+\]</div>
+<p>where, in automatic mode,</p>
+<div class="arithmatex">\[
+\Delta K_i=\frac{c_i}{L_i}.
+\]</div>
+<p>Here <span class="arithmatex">\(L_i\)</span> is the box length in direction <span class="arithmatex">\(i\)</span>, and <span class="arithmatex">\(c_i\)</span> is a user-defined reciprocal-space resolution parameter.</p>
+<p>The reciprocal-space convention is:</p>
+<div class="arithmatex">\[
+|\mathbf{K}|
+=
+\frac{2\sin\theta}{\lambda}
+=
+\frac{1}{d},
+\]</div>
+<p>therefore:</p>
+<div class="arithmatex">\[
+s
+=
+\frac{\sin\theta}{\lambda}
+=
+\frac{|\mathbf{K}|}{2}.
+\]</div>
+<p>This differs from the conventional XRD scattering-vector convention:</p>
+<div class="arithmatex">\[
+q
+=
+\frac{4\pi\sin\theta}{\lambda}.
+\]</div>
+<p>The two are related by:</p>
+<div class="arithmatex">\[
+q=2\pi|\mathbf{K}|.
+\]</div>
+<p>The structure factor is:</p>
+<div class="arithmatex">\[
+F(\mathbf{K})
+=
+\sum_{j=1}^{N}
+f_j(s)
+\exp\left[
+2\pi i\mathbf{K}\cdot\mathbf{r}_j
+\right].
+\]</div>
+<p>The intensity at a reciprocal-space mesh point is:</p>
+<div class="arithmatex">\[
+I(\mathbf{K})
+=
+\frac{|F(\mathbf{K})|^2}
+{N_{\mathrm{atoms}}}.
+\]</div>
+<p>When Lorentz–polarization correction is enabled, the code applies the square root of the LP factor to the real and imaginary structure-factor amplitudes. The final intensity therefore contains the full LP factor:</p>
+<div class="arithmatex">\[
+I_{\mathrm{LP}}(\mathbf{K})
+=
+L_p(\theta)
+\frac{|F(\mathbf{K})|^2}
+{N_{\mathrm{atoms}}}.
+\]</div>
+<p>The atomic scattering factor is represented by a Cromer–Mann-type expression:</p>
+<div class="arithmatex">\[
+f(s)
+=
+\sum_{m=1}^{4}
+A_m\exp(-B_m s^2)
++
+C.
+\]</div>
+<p>The Lorentz–polarization factor is:</p>
+<div class="arithmatex">\[
+L_p(\theta)
+=
+\frac{1+\cos^2(2\theta)}
+{\cos\theta\sin^2\theta}.
+\]</div>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li>
+<p><strong>Periodic systems</strong>: It is most appropriate for periodic orthogonal simulation cells with known box dimensions.</p>
+</li>
+<li>
+<p><strong>Manual reciprocal mesh</strong>: In <code>manual = 1</code> mode, the mesh uses:</p>
+<div class="arithmatex">\[
+\Delta K_i=c_i.
+\]</div>
+<p>Therefore, <code>prd</code> is recorded for provenance but does not alter the reciprocal-space mesh in manual mode.</p>
+</li>
+<li>
+<p><strong>Automatic reciprocal mesh</strong>: In automatic mode, reciprocal mesh spacing is set by the physical box dimensions:</p>
+<div class="arithmatex">\[
+\Delta K_i=\frac{c_i}{L_i}.
+\]</div>
+<p>Missing or incorrect box dimensions change the reciprocal mesh and therefore alter sampled diffraction positions.</p>
+</li>
+<li>
+<p><strong>Histogram output</strong>: The final <span class="arithmatex">\(2\theta\)</span> pattern is a weighted sum over accepted reciprocal mesh nodes. It is not automatically a normalized orientational powder average.</p>
+</li>
+<li>
+<p><strong>Orthogonal cells</strong>: The strict LAMMPS-compatible mode is intended for orthogonal cells. Triclinic cells are not equivalent to the LAMMPS <code>compute xrd</code> formulation used here.</p>
+</li>
+</ul>
+<h3 id="input-parameters">Input Parameters</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>structure_file</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;">Required</td>
+<td style="text-align: left;">Input structure (XYZ, LAMMPS Data, etc.).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>output_file</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;">Required</td>
+<td style="text-align: left;">Output diffraction data file.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_file</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;"><code>xrd_plot.png</code></td>
+<td style="text-align: left;">Output plot file.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>wavelength</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>1.5406</code></td>
+<td style="text-align: left;">X-ray wavelength in Å. This module uses a numeric wavelength</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>2Theta</code></td>
+<td style="text-align: left;">Float List</td>
+<td style="text-align: left;"><code>10, 179</code></td>
+<td style="text-align: left;">Minimum and maximum <span class="arithmatex">\(2\theta\)</span> angles in degrees. An invalid range falls back to the default.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pbc</code></td>
+<td style="text-align: left;">Bool List</td>
+<td style="text-align: left;">From file</td>
+<td style="text-align: left;">Periodic boundaries in x, y, and z.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>atom_types</code></td>
+<td style="text-align: left;">List</td>
+<td style="text-align: left;">Required</td>
+<td style="text-align: left;">Ordered scattering-factor labels.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>atom_type_mode</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>auto</code></td>
+<td style="text-align: left;">Atom-type interpretation: <code>auto</code>, <code>lammps_numeric</code>, or <code>chemical_symbols</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>manual</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">Enable manual reciprocal-space mesh mode.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>prd</code></td>
+<td style="text-align: left;">Float List</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Box dimensions recorded for provenance.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>c</code></td>
+<td style="text-align: left;">Float List</td>
+<td style="text-align: left;"><code>1,1,1</code></td>
+<td style="text-align: left;">Reciprocal-space resolution modifiers. Lower values create a finer reciprocal grid and increase computational cost.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>num_bins</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>250</code></td>
+<td style="text-align: left;">Number of <span class="arithmatex">\(2\theta\)</span> histogram bins.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>LP</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>1</code></td>
+<td style="text-align: left;">Apply the Lorentz–polarization factor.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>compatibility_mode</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>strict_lammps</code></td>
+<td style="text-align: left;"><code>strict_lammps</code> rejects unsupported cells; <code>relaxed</code> permits non-benchmark approximations.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_reciprocal_candidates</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>20000000</code></td>
+<td style="text-align: left;">Maximum permitted candidate reciprocal nodes before a safety stop.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>allow_large_reciprocal_grid</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">Allow a reciprocal grid larger than the safety cap.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_smoothing_sigma_deg</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.0</code></td>
+<td style="text-align: left;">Display-only Gaussian smoothing of the binned diffraction curve.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>echo</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">Print progress and diagnostic information.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">Generate a diffraction plot.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="notes">Notes</h2>
+<p>This module follows the methodology of the <a href="https://docs.lammps.org/compute_xrd.html">LAMMPS compute xrd</a> command. Users can consult the corresponding LAMMPS documentation for detailed background information.</p>
+<p>Do not use inferred box dimensions when benchmarking a periodic LAMMPS calculation. Since:</p>
+<div class="arithmatex">\[
+\Delta K_i=\frac{c_i}{L_i},
+\]</div>
+<p>an invented box length changes the reciprocal-space sampling grid.</p>
+<hr />
+<h2 id="part-ii-xrd-kinematical">Part II: XRD-Kinematical</h2>
+<h3 id="physics-and-methodology_1">Physics and Methodology</h3>
+<p>This module implements a rigorous <strong>kinematical diffraction</strong> approach, enhancing crystallographic structure-factor calculations with optional experimental corrections.</p>
+<p>It is designed for a periodic crystal, represented either by a unit cell or by a periodic simulation box. Peak positions arise from the lattice that is used; atomic coordinates determine the structure factor and reflection intensity.</p>
+<p>The crystal does <strong>not</strong> have to be ideal. Vacancies, substitutional disorder, thermal displacement, strain and extended defects are all computed correctly, if the lattice has the true periodicity of the atoms. When the structure file carries a simulation box, or one can be recovered from the unit cell, every atom is kept and nothing is folded, so the defects reach the structure factors.</p>
+<p>What is genuinely out of scope is an <strong>aperiodic</strong> structure: a finite nanoparticle, an isolated cluster, or any configuration with free surfaces. For those there is no lattice to supply, and the module stops with a diagnostic pointing at <code>XRD-Debye_Scattering</code>. See <em>Periodicity Assessment</em> below.</p>
+<p>The crystallographic structure factor is:</p>
+<div class="arithmatex">\[
+F_{hkl}
+=
+\sum_j
+f_j(s)
+\exp\left[
+2\pi i(hx_j+ky_j+lz_j)
+\right].
+\]</div>
+<p>The base reflection intensity is calculated by <code>pymatgen</code> through <code>XRDCalculator</code>. The reported integrated intensities include crystallographic multiplicity and the Lorentz–polarization factor implemented by pymatgen.</p>
+<p>The intended correction order is:</p>
+<ol>
+<li>Pymatgen kinematical integrated reflection intensity.</li>
+<li>Optional species-resolved Debye–Waller damping.</li>
+<li>Optional sample absorption correction.</li>
+<li>Optional user scale factor.</li>
+<li>Convolution with a Gaussian line profile.</li>
+<li>Optional display normalization.</li>
+</ol>
+<p>The applied correction order is written into the output file headers.</p>
+<h3 id="1-absorption-correction">1. Absorption Correction</h3>
+<p>X-ray absorption is based on the Beer–Lambert relation:</p>
+<div class="arithmatex">\[
+I=I_0\exp(-\mu x),
+\]</div>
+<p>where <span class="arithmatex">\(\mu\)</span> is the linear absorption coefficient and <span class="arithmatex">\(x\)</span> is the X-ray path length.</p>
+<p>Absorption correction is disabled unless:</p>
+<pre><code class="language-text">apply_absorption = yes
+</code></pre>
+<p>The code supports several explicit sample geometries.</p>
+<ul>
+<li>
+<p><strong>Debye–Scherrer cylindrical capillary</strong>:</p>
+<div class="arithmatex">\[
+A(2\theta)
+=
+\left\langle
+\exp[-\mu(L_{\mathrm{in}}+L_{\mathrm{out}})]
+\right\rangle.
+\]</div>
+<p>The average is evaluated numerically over the capillary cross section. Here <span class="arithmatex">\(L_{\mathrm{in}}\)</span> and <span class="arithmatex">\(L_{\mathrm{out}}\)</span> are the incoming and outgoing path lengths for each scattering point inside the cylindrical sample.</p>
+<p>For small <span class="arithmatex">\(\mu R\)</span>, the cylindrical result approaches:</p>
+<div class="arithmatex">\[
+A
+\rightarrow
+1-\frac{16}{3\pi}\mu R.
+\]</div>
+</li>
+<li>
+<p><strong>Flat plate in Bragg–Brentano reflection geometry</strong>:</p>
+<div class="arithmatex">\[
+A(\theta)
+=
+\frac{
+1-\exp[-2\mu t/\sin\theta]
+}{
+2\mu t/\sin\theta
+}.
+\]</div>
+<p>Here <span class="arithmatex">\(t\)</span> is the sample thickness. This expression is normalized so that <span class="arithmatex">\(A\rightarrow1\)</span> as <span class="arithmatex">\(\mu\rightarrow0\)</span>.</p>
+</li>
+<li>
+<p><strong>Flat plate in symmetric transmission geometry</strong>:</p>
+<div class="arithmatex">\[
+A(\theta)
+=
+\exp\left[
+-\mu t
+\left(
+\frac{1}{\cos\theta}-1
+\right)
+\right].
+\]</div>
+</li>
+<li>
+<p><strong>Approximate slab attenuation</strong>:</p>
+<div class="arithmatex">\[
+A(\theta)
+=
+\exp\left[
+-\mu t
+\left(
+\frac{1}{\sin\theta}-1
+\right)
+\right].
+\]</div>
+<p>This is explicitly an approximate single-path attenuation expression and should not be used as a substitute for a geometry-specific diffraction absorption correction.</p>
+</li>
+</ul>
+<h3 id="2-instrumental-broadening">2. Instrumental Broadening</h3>
+<p>To simulate finite instrument resolution, discrete Bragg reflections are convolved with a Gaussian profile:</p>
+<div class="arithmatex">\[
+I_{\mathrm{curve}}(2\theta)
+=
+\sum_i I_i
+G(2\theta-2\theta_i;\sigma),
+\]</div>
+<p>where the normalized Gaussian line profile is:</p>
+<div class="arithmatex">\[
+G(x;\sigma)
+=
+\frac{1}{\sigma\sqrt{2\pi}}
+\exp\left[
+-\frac{x^2}{2\sigma^2}
+\right].
+\]</div>
+<p>The Gaussian is area normalized:</p>
+<div class="arithmatex">\[
+\int_{-\infty}^{\infty}
+G(x;\sigma)\,dx
+=
+1.
+\]</div>
+<p>Therefore:</p>
+<div class="arithmatex">\[
+\int
+I_{\mathrm{curve}}(2\theta)\,
+d(2\theta)
+\approx
+\sum_i I_i.
+\]</div>
+<p>The discrete reflection list contains integrated intensities, whereas the continuous curve contains intensity density per degree <span class="arithmatex">\(2\theta\)</span>. Their numerical values should therefore not be expected to be equal.</p>
+<p>The total Gaussian width is calculated by quadrature:</p>
+<div class="arithmatex">\[
+\sigma_{\mathrm{total}}
+=
+\sqrt{
+\sigma_{\mathrm{base}}^2+
+\sigma_{\mathrm{inst}}^2+
+\sigma_{\mathrm{plot}}^2
+}.
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\sigma_{\mathrm{base}}\)</span> is <code>gaussian_width</code>.</li>
+<li><span class="arithmatex">\(\sigma_{\mathrm{inst}}\)</span> is <code>instrument_sigma_deg</code>.</li>
+<li><span class="arithmatex">\(\sigma_{\mathrm{plot}}\)</span> is <code>plot_smoothing_sigma_deg</code>.</li>
+</ul>
+<p>All widths are Gaussian standard deviations in degrees <span class="arithmatex">\(2\theta\)</span>, not FWHM values. The conversion is:</p>
+<div class="arithmatex">\[
+\mathrm{FWHM}
+=
+2\sqrt{2\ln2}\,\sigma
+\approx2.35482\sigma.
+\]</div>
+<h3 id="3-peak-filtering">3. Peak Filtering</h3>
+<p>The algorithm separates the physical diffraction curve from the display-peak list.</p>
+<p>The complete calculated reflection list is always used to create the continuous broadened curve. Reflection filtering affects only:</p>
+<ul>
+<li>Peak labels in the plot.</li>
+<li><code>xrd_peaks_display.txt</code>.</li>
+<li>The concise tabulated display peak list.</li>
+</ul>
+<p>The display selection can apply:</p>
+<ol>
+<li><strong>Intensity cutoff</strong>: retain reflections above a defined fraction or percent of the maximum reflection intensity.</li>
+<li><strong>Minimum separation</strong>: when two reflections are closer than <code>min_peak_separation</code>, retain the strongest reflection for display.</li>
+<li><strong>Maximum count</strong>: limit the number of displayed peaks with <code>max_peaks</code>.</li>
+</ol>
+<p>Filtering does not remove overlapping reflections from the physical continuous curve. Their Gaussian profiles add.</p>
+<h3 id="key-features_1">Key Features</h3>
+<ul>
+<li>
+<p><strong>Periodic crystal model</strong>: Appropriate for crystallographic cells and periodic simulation boxes, <strong>including defective ones</strong> — vacancies, disorder, strain and extended defects are computed, not excluded. Only aperiodic structures (finite clusters, free surfaces) are outside its scope.</p>
+</li>
+<li>
+<p><strong>Cell sourcing</strong>: The periodic cell is taken from the structure file, from a cell ASE can read, from a separate <code>cell_file</code>, from a whole-number multiple of the supplied unit cell, or inferred from the coordinates alone at any orientation. If every route fails the structure is not a periodic crystal and the run stops with a pointer to <code>XRD-Debye_Scattering.py</code>.</p>
+</li>
+<li>
+<p><strong>Cost guard</strong>: The work scales as cell volume × atoms, so an oversized box is refused before the calculation starts, with the alternatives named. See <code>max_reflection_cost</code>.</p>
+</li>
+<li>
+<p><strong>Coordinate handling</strong>: Coordinates can be read as Cartesian or fractional coordinates. Cartesian coordinates are converted to fractional coordinates relative to the supplied lattice.</p>
+</li>
+<li>
+<p><strong>Coordinate wrapping</strong>: <code>wrap_coords = yes</code> folds fractional coordinates into <span class="arithmatex">\([0,1)\)</span>. Folding is used only in <code>unit_cell</code> mode; in <code>simulation_box</code> mode the box is the lattice and nothing is folded, which is what preserves the defects. Folding is not appropriate for a finite particle or a non-commensurate supercell, and the periodicity assessment refuses those cases rather than folding them.</p>
+</li>
+<li>
+<p><strong>Image merging</strong>: In <code>unit_cell</code> mode, <code>check_duplicate_sites = yes</code> <strong>merges</strong> the images that folding stacked onto one crystallographic site; it does not merely warn about them. Without this step the cell would retain every atom of the supercell inside the volume of a single cell.</p>
+</li>
+<li>
+<p><strong>Structure diagnostics</strong>: The code reports how many atoms lay outside the supplied cell, how many images each site received, and whether any site received more than one element. An uneven spread of images is flagged, because folding a defective supercell keeps only the average cell and discards the defects.</p>
+</li>
+<li>
+<p><strong>Experimental corrections</strong>:</p>
+<ul>
+<li>Lorentz–polarization is included in the base pymatgen reflection calculation.</li>
+<li>Debye–Waller damping is optional.</li>
+<li>Absorption is optional and geometry-specific.</li>
+<li>Instrumental broadening is optional.</li>
+<li>Display normalization is optional.</li>
+</ul>
+</li>
+<li>
+<p><strong>Three-output design</strong>:</p>
+<ul>
+<li><code>xrd_reflections_full.txt</code>: complete unfiltered integrated reflection list.</li>
+<li><code>xrd_peaks_display.txt</code>: filtered display-only peak list.</li>
+<li><code>xrd_curve.txt</code>: continuous broadened curve with intensity density per degree <span class="arithmatex">\(2\theta\)</span>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Outputs</strong>:<br />
+  Structure information includes number of atoms, composition, lattice parameters, and volume.<br />
+  Peak analysis reports the number of computed and displayed reflections. It lists the strongest reflections by integrated intensity, including <span class="arithmatex">\(2\theta\)</span>, intensity, d-spacing, multiplicity, and Miller indices.<br />
+  Plotting creates an indexed XRD pattern.</p>
+</li>
+</ul>
+<h3 id="periodicity-assessment">Periodicity Assessment</h3>
+<p>The lattice given to pymatgen sets both which reflections exist and what their structure factors are, so it has to be the true periodicity of the atoms. The module establishes it automatically; <code>lattice_mode = auto</code> applies the following rule in order.</p>
+<ol>
+<li>
+<p><strong>Box in the file.</strong> If line 2 of the structure file carries an extended-XYZ <code>Lattice="ax ay az bx by bz cx cy cz"</code> entry (as written by ASE, OVITO and LAMMPS dump-style output), that box is the lattice. Every atom is kept and nothing is folded, so defects are computed. Mode: <code>simulation_box</code>.</p>
+</li>
+<li>
+<p><strong>Cell read by ASE.</strong> Otherwise, with <code>use_ase = yes</code>, ASE is asked to read a cell from the structure file itself. This covers the formats that carry their box outside an extended-XYZ comment line — LAMMPS dump and data files, <code>POSCAR</code>/<code>CONTCAR</code>, CIF and the rest of the ASE reader set. The first frame is taken, to match the frame the coordinates are read from. Mode: <code>simulation_box</code>.</p>
+</li>
+<li>
+<p><strong>Cell from <code>cell_file</code>.</strong> Otherwise, if <code>cell_file</code> names a second file, its box is applied to these coordinates. This is the route for a dump that lost its header, or for coordinates that belong with the box of the relaxed data file they came from. Mode: <code>simulation_box</code>.</p>
+</li>
+<li>
+<p><strong>Box recovered from the unit cell.</strong> Otherwise, if <code>a</code>, <code>b</code>, <code>c</code> and the angles were supplied, the module looks for a whole-number multiple of that cell. The span of the coordinates is measured in <strong>fractional</strong> units and rounded to an integer — measuring in fractional rather than Cartesian units is what makes this valid for monoclinic and triclinic cells, where the extent along <span class="arithmatex">\(x,y,z\)</span> is not the extent along <span class="arithmatex">\(a,b,c\)</span>. Each candidate box is then <strong>confirmed rather than trusted</strong>: it is accepted only if it repairs the coordination, that is, if fewer than <code>periodicity_surface_tol</code> of the atoms remain under-coordinated once the box is applied. A genuine periodic cell becomes fully coordinated under its own box; a cluster does not, whatever box is tried. Mode: <code>simulation_box</code>.</p>
+</li>
+<li>
+<p><strong>Cell inferred from the coordinates.</strong> Otherwise, with <code>infer_cell = yes</code>, the box is recovered from the coordinates alone, at any orientation. Two searches run. A per-axis scan looks for the repeat length along each of <span class="arithmatex">\(x,y,z\)</span>, scoring a trial period by how well the slab it implies restores coordination; an axis clears when it reaches <code>axis_period_min_score</code>. In parallel, candidate translations within <code>cell_inference_reach</code> × <span class="arithmatex">\(r_1\)</span> are tested for mapping the structure onto itself <strong>species by species</strong>, so that B2 yields its simple-cubic cell rather than the bcc cell of the underlying point set. A translation is accepted as a lattice vector when it maps at least <code>cell_inference_min_score</code> of the atoms onto an atom of the same species, within <code>cell_inference_tol</code> × <span class="arithmatex">\(r_1\)</span>. This is the route that handles a cell built on directions such as <span class="arithmatex">\([111]\)</span>, the usual dislocation setup, which no multiple of <span class="arithmatex">\(a,b,c\)</span> along <span class="arithmatex">\(x,y,z\)</span> can reproduce. Mode: <code>simulation_box</code>.</p>
+</li>
+<li>
+<p><strong>Fold into the unit cell.</strong> If no box can be established, the coordinates are folded into the supplied cell and the images are merged back onto their crystallographic sites. The result is accepted only if the fold is meaningful, judged by element-agnostic gates: the number of images per site must be a whole number, no site may receive two different elements, and the surviving sites must clear a hard-sphere packing floor. Mode: <code>unit_cell</code>.</p>
+<p>No absolute volume-per-site window is used, because a physical cell ranges from about 5.7 Å³ per atom for diamond to about 110 Å³ per atom for caesium; any fixed window would reject real crystals.</p>
+</li>
+<li>
+<p><strong>Refusal.</strong> If none of the above holds, the structure is not a periodic crystal. The module stops and reports the evidence — atoms, bounding box, the under-coordinated fraction, and a per-axis verdict with the period found and the score reached — then points at <code>XRD-Debye_Scattering.py</code>, which computes the pattern directly from the interatomic distances, needs no lattice at all, and keeps the crystallite-size broadening a periodic calculation throws away. There is no override: <code>allow_aperiodic</code> is retired and now only produces a warning saying so, because a pattern computed from a structure with no lattice is not a result worth producing.</p>
+</li>
+</ol>
+<p>The coordination shell used throughout is taken from the <strong>first minimum of the radial distribution function</strong> rather than a fixed multiple of the nearest-neighbour distance. A fixed multiple such as <span class="arithmatex">\(1.25\,r_1\)</span> suits fcc, hcp, diamond and rocksalt, where <span class="arithmatex">\(r_2/r_1 = 1.41\)</span> to <span class="arithmatex">\(1.63\)</span>, but straddles the first two shells of bcc, where <span class="arithmatex">\(r_2/r_1 = 1.155\)</span>. The first-minimum rule has no such dependence on crystal system.</p>
+<h4 id="limitations">Limitations</h4>
+<ul>
+<li>
+<p><strong>Folding</strong> into a supplied cell (<code>lattice_mode = unit_cell</code>) assumes the cell axes are aligned with <span class="arithmatex">\(x,y,z\)</span>; it cannot be used for a cell built on directions such as <span class="arithmatex">\([111]\)</span>. Inference is what covers those, so a rotated or non-axis-aligned periodic cell no longer needs its box given explicitly — though supplying one is still faster and exact.</p>
+</li>
+<li>
+<p>An <strong>axis-aligned crystalline cluster</strong> has coordinates indistinguishable from those of a periodic cell, so it is accepted and folded. The calculation is then that of the infinite crystal: the Bragg peaks carry no crystallite-size broadening and the free surfaces contribute nothing. A warning is issued whenever a fold succeeds on a structure that still shows a substantial under-coordinated fraction.</p>
+</li>
+</ul>
+<h3 id="input-parameters_1">Input Parameters</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>I. Input &amp; Lattice</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>xyz_file</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;">Required</td>
+<td style="text-align: left;">Input structure file.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>a</code>, <code>b</code>, <code>c</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">Optional</td>
+<td style="text-align: left;"><strong>Unit-cell</strong> constants in Å — the crystallographic cell, never the supercell. A supercell box is read from the structure file or recovered internally from this cell; see <code>lattice_mode</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>alpha</code>, <code>beta</code>, <code>gamma</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">Optional</td>
+<td style="text-align: left;"><strong>Unit-cell</strong> angles in degrees. Supply them with <code>a</code>, <code>b</code>, <code>c</code> or omit all six; they are required for <code>lattice_mode = unit_cell</code> and for <code>coordinate_mode = fractional</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>species_mode</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>chemical_symbols</code></td>
+<td style="text-align: left;">Species interpretation: <code>chemical_symbols</code>, <code>atomic_numbers</code>, or <code>lammps_types</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>type_map</code></td>
+<td style="text-align: left;">Map</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Mapping for <code>lammps_types</code>, for example <code>1:Cu,2:Zn</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>coordinate_mode</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>cartesian</code></td>
+<td style="text-align: left;">Coordinate type stored in the input structure: <code>cartesian</code> or <code>fractional</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>lattice_mode</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>auto</code></td>
+<td style="text-align: left;">Which lattice is given to pymatgen: <code>auto</code>, <code>simulation_box</code>, or <code>unit_cell</code>. See <em>Periodicity Assessment</em>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>wrap_coords</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>yes</code></td>
+<td style="text-align: left;">Wrap fractional coordinates into <span class="arithmatex">\([0,1)\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>check_duplicate_sites</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>yes</code></td>
+<td style="text-align: left;">In <code>unit_cell</code> mode, <strong>merge</strong> the folded images back onto their crystallographic sites.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>collapse_tol</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.25</code></td>
+<td style="text-align: left;">Radius in Å within which folded images count as the same site. It must exceed the thermal displacement of a site.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>validate_proximity</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>yes</code></td>
+<td style="text-align: left;">Apply pymatgen's <code>Structure.DISTANCE_TOLERANCE</code> check and refuse a cell whose sites are closer than 0.5 Å. Above 5000 sites the same tolerance is checked with a neighbour tree, because pymatgen's own check builds <span class="arithmatex">\(N \times N\)</span> arrays; above <code>max_proximity_check_atoms</code> it is skipped altogether.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>periodicity_surface_tol</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.05</code></td>
+<td style="text-align: left;">A candidate box is accepted when it leaves fewer than this fraction of atoms under-coordinated.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>use_ase</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>yes</code></td>
+<td style="text-align: left;">Let ASE read a cell from the structure file when it carries no extended-XYZ <code>Lattice=</code> entry (LAMMPS dump or data, <code>POSCAR</code>, CIF, …). The first frame is used.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>cell_file</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">A second file whose box is applied to these coordinates, for example the relaxed data file a dump came from.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>infer_cell</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>yes</code></td>
+<td style="text-align: left;">Recover the box from the coordinates alone, at any orientation. This is what handles a cell built on directions such as <span class="arithmatex">\([111]\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_proximity_check_atoms</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>20000</code></td>
+<td style="text-align: left;">Above this many sites the proximity check is skipped entirely.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>cell_inference_tol</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.15</code></td>
+<td style="text-align: left;">How close two atoms must sit, as a fraction of the nearest-neighbour distance <span class="arithmatex">\(r_1\)</span>, for a translation to count as mapping one onto the other.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>cell_inference_min_score</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.90</code></td>
+<td style="text-align: left;">Fraction of atoms a candidate translation must map onto an atom of the <strong>same species</strong> before it is accepted as a lattice vector.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>cell_inference_reach</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>1.8</code></td>
+<td style="text-align: left;">Radius, in units of <span class="arithmatex">\(r_1\)</span>, within which candidate translation vectors are generated.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>cell_inference_max_vectors</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>24</code></td>
+<td style="text-align: left;">Stop after this many accepted translation vectors.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>cell_inference_max_residual</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.10</code></td>
+<td style="text-align: left;">How far, in units of <span class="arithmatex">\(r_1\)</span>, the inferred cell may be from closing on the coordinates before it is rejected.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>axis_period_margin</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>1.0</code></td>
+<td style="text-align: left;">Slab thickness, in units of the first-shell cutoff, used when scanning an axis for its repeat length.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>axis_period_min_score</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.92</code></td>
+<td style="text-align: left;">Score an axis must reach before it counts as periodic.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_box_scan_atoms</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>200000</code></td>
+<td style="text-align: left;">Upper size for the per-axis box scan. The scan builds a neighbour tree per trial period, so it is slow well before this limit.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_collapse_atoms</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>20000</code></td>
+<td style="text-align: left;">Upper size for the image-merging step, which builds an <span class="arithmatex">\(N \times N\)</span> distance matrix. Above this the images are left unmerged.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>repeats_integer_tol</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.01</code></td>
+<td style="text-align: left;">Tolerance on the requirement that the number of images per site be a whole number.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>II. Calculation</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>wavelength</code></td>
+<td style="text-align: left;">Enum/Float</td>
+<td style="text-align: left;"><code>CuKa</code></td>
+<td style="text-align: left;">Radiation source. Named values are resolved by pymatgen. <code>CuKa = 1.54184</code> Å is a K<span class="arithmatex">\(\alpha_1\)</span>/K<span class="arithmatex">\(\alpha_2\)</span> weighted average.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>two_theta_min</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>10.0</code></td>
+<td style="text-align: left;">Minimum <span class="arithmatex">\(2\theta\)</span> angle in degrees.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>two_theta_max</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>90.0</code></td>
+<td style="text-align: left;">Maximum <span class="arithmatex">\(2\theta\)</span> angle in degrees.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>reflection_cost_warn</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>5e7</code></td>
+<td style="text-align: left;">Warn above this many structure-factor terms (reflections × atoms).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_reflection_cost</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>1e10</code></td>
+<td style="text-align: left;">Refuse the run above this many terms. The number of reflections grows with the <strong>cell volume</strong> and each one costs a sum over every atom, so the work scales as volume × atoms — a large MD box is the worst case for this method. Use <code>XRD-ReciprocalSum</code> for a large periodic box, or <code>XRD-Debye_Scattering</code> if it has free surfaces anyway.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>scale_factor</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>1.0</code></td>
+<td style="text-align: left;">Global intensity scaling factor.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>float_precision</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>4</code></td>
+<td style="text-align: left;">Decimal places written to output files.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>III. Corrections</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>experimental_correction</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Convenience switch enabling Debye–Waller and instrumental broadening only when their corresponding values are supplied and the matching <code>apply_*</code> key is not set explicitly. In the GUI an unticked correction box is left unset, so this switch can still enable it. It never enables absorption automatically.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apply_debye_waller</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Enable Debye–Waller thermal damping.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>debye_waller_factors</code></td>
+<td style="text-align: left;">String</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Element-specific <span class="arithmatex">\(B_{\mathrm{iso}}\)</span> values in Å<span class="arithmatex">\(^2\)</span>, for example <code>Zn=0.5,Cu=0.6</code>. They are checked against the structure only when <code>apply_debye_waller = yes</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apply_absorption</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Enable absorption correction.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>absorption_geometry</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>cylinder</code></td>
+<td style="text-align: left;"><code>cylinder</code>, <code>debye_scherrer</code>, <code>bragg_brentano_reflection</code>, <code>symmetric_transmission</code>, or <code>slab_attenuation_approx</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mu_linear_cm_inverse</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Linear absorption coefficient <span class="arithmatex">\(\mu\)</span> in cm<span class="arithmatex">\(^{-1}\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>capillary_radius_cm</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.05</code></td>
+<td style="text-align: left;">Capillary radius in cm for cylindrical Debye–Scherrer geometry.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sample_thickness_cm</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.1</code></td>
+<td style="text-align: left;">Sample thickness in cm for flat-plate geometries.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IV. Broadening</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apply_instrumental_broadening</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Enable instrumental Gaussian broadening.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>instrument_sigma_deg</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.0</code></td>
+<td style="text-align: left;">Instrument Gaussian <span class="arithmatex">\(\sigma\)</span> in degrees <span class="arithmatex">\(2\theta\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apply_plot_smoothing</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Enable cosmetic display smoothing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_smoothing_sigma_deg</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.0</code></td>
+<td style="text-align: left;">Cosmetic Gaussian <span class="arithmatex">\(\sigma\)</span> in degrees <span class="arithmatex">\(2\theta\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>gaussian_width</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.0</code></td>
+<td style="text-align: left;">Base Gaussian <span class="arithmatex">\(\sigma\)</span>, added in quadrature with other widths.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>gaussian_points</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>1000</code></td>
+<td style="text-align: left;">Number of points in the continuous curve.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>curve_padding_deg</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.0</code></td>
+<td style="text-align: left;">Additional plot/curve range outside the requested <span class="arithmatex">\(2\theta\)</span> interval.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>V. Display Filtering</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_intensity_fraction</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.005</code></td>
+<td style="text-align: left;">Minimum display intensity as fraction of maximum reflection intensity.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_intensity_percent</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Minimum display intensity as percent of maximum reflection intensity.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_intensity</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Legacy parameter interpreted as a percent.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_peaks</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">Maximum number of labelled/displayed reflections; <code>0</code> means all selected reflections.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_peak_separation</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.0</code></td>
+<td style="text-align: left;">Minimum separation in degrees for display labels. The strongest reflection in a cluster is retained.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>VI. Normalisation &amp; Output</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>normalize_mode</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>none</code></td>
+<td style="text-align: left;"><code>none</code>, <code>curve_max_100</code>, or <code>reflection_max_100</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>normalize_max</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>100.0</code></td>
+<td style="text-align: left;">Target maximum used by normalization modes.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>reflections_file</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;"><code>xrd_reflections_full.txt</code></td>
+<td style="text-align: left;">Full calculated reflection list.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>peaks_file</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;"><code>xrd_peaks_display.txt</code></td>
+<td style="text-align: left;">Filtered display-peak list.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>curve_file</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;"><code>xrd_curve.txt</code></td>
+<td style="text-align: left;">Continuous Gaussian-broadened curve.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>save_cif</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Save the periodic structure that was used. In <code>simulation_box</code> mode this is the full supercell; in <code>unit_cell</code> mode it is the cell with the merged sites. By default it is reduced to the primitive cell, but <strong>only when the reduction is lossless</strong> — a box with vacancies, substitutions or thermal displacement keeps every atom.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>cif_content</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>primitive</code></td>
+<td style="text-align: left;">What the CIF holds: <code>primitive</code> (the smallest cell the structure reduces to, losslessly), <code>conventional</code> (the standard crystallographic setting), or <code>as_used</code> (every atom of the structure the pattern was computed from).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>cif_symprec</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.01</code></td>
+<td style="text-align: left;">Symmetry tolerance in Å for the reduction. Larger values reduce more aggressively and can erase small displacements.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>cif_file</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;"><code>structure.cif</code></td>
+<td style="text-align: left;">Filename for the saved CIF.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>make_plot</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>yes</code></td>
+<td style="text-align: left;">Generate the indexed XRD plot.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>show_plot</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Display the plot interactively.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>show_structure_info</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>yes</code></td>
+<td style="text-align: left;">Print the structure and peak-analysis summary described under <em>Outputs</em>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_filename</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;"><code>xrd_plot.png</code></td>
+<td style="text-align: left;">Plot output file.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_dpi</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>150</code></td>
+<td style="text-align: left;">Plot resolution.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_figsize</code></td>
+<td style="text-align: left;">List</td>
+<td style="text-align: left;"><code>[12, 6]</code></td>
+<td style="text-align: left;">Plot size in inches.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>show_grid</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>yes</code></td>
+<td style="text-align: left;">Display plot grid.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>grid_alpha</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.3</code></td>
+<td style="text-align: left;">Grid transparency.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>marker_at</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>smoothed</code></td>
+<td style="text-align: left;">Marker location: <code>smoothed</code> or <code>sticks</code>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="notes_1">Notes</h2>
+<p>The core diffraction calculation of this module uses <a href="https://pymatgen.org/pymatgen.analysis.diffraction.html#pymatgen.analysis.diffraction.xrd.XRDCalculator">Pymatgen’s XRDCalculator</a>. Users can consult the corresponding documentation for detailed crystallographic background information.</p>
+<p>For a finite nanoparticle, isolated cluster, liquid snapshot, or any structure with free surfaces, use the Debye scattering module instead; the Kinematical module assumes a periodic structure and will refuse an aperiodic one. A <strong>periodic</strong> cell containing defects — vacancies, substitutional disorder, strain, a grain boundary or a dislocation — is handled by this module: supply the simulation box, and every atom contributes to the structure factors.</p>
+<hr />
+<h2 id="part-iii-xrd-debye-scattering">Part III: XRD-Debye Scattering</h2>
+<h3 id="workflow-overview">Workflow Overview</h3>
+<p>The script transforms a finite set of atomic coordinates into a powder-averaged diffraction pattern using the Debye Scattering Equation (DSE).</p>
+<p>The workflow is divided into the following stages:</p>
+<ol>
+<li>
+<p><strong>Atomic Form-Factor Calculation</strong>: The script calculates X-ray scattering factors for each chemical species at every <span class="arithmatex">\(q\)</span> value. It supports standard Cromer–Mann form factors and optional anomalous corrections <span class="arithmatex">\(f'\)</span> and <span class="arithmatex">\(f''\)</span>.</p>
+</li>
+<li>
+<p><strong>Computational Core</strong>: The DSE is evaluated by either an exact pairwise sum or a distance-binned pair sum.</p>
+</li>
+<li>
+<p><strong>Measurement Corrections and Normalization</strong>: Optional Lorentz–polarization, instrumental broadening, scale factor, and display normalization are applied after intrinsic Debye scattering has been calculated.</p>
+</li>
+<li>
+<p><strong>Optional Structural Diagnostics</strong>: Partial RDFs and pair-distance distributions may be generated for structural analysis. These diagnostics do not enter the Debye scattering calculation.</p>
+</li>
+</ol>
+<h3 id="mathematical-framework">Mathematical Framework</h3>
+<p>The script is grounded in kinematic X-ray scattering from a finite atom set.</p>
+<h4 id="a-scattering-vector-q">A. Scattering Vector (<span class="arithmatex">\(q\)</span>)</h4>
+<p>The relationship between scattering angle <span class="arithmatex">\(2\theta\)</span> and scattering-vector magnitude <span class="arithmatex">\(q\)</span> is:</p>
+<div class="arithmatex">\[
+q
+=
+\frac{4\pi\sin\theta}{\lambda}.
+\]</div>
+<p>where <span class="arithmatex">\(\lambda\)</span> is the radiation wavelength.</p>
+<p>The Cromer–Mann variable is:</p>
+<div class="arithmatex">\[
+s
+=
+\frac{\sin\theta}{\lambda}
+=
+\frac{q}{4\pi}.
+\]</div>
+<p>The current implementation passes <span class="arithmatex">\(q\)</span> in Å<span class="arithmatex">\(^{-1}\)</span> to <code>periodictable</code>, which internally uses the appropriate <span class="arithmatex">\(s=q/(4\pi)\)</span> convention.</p>
+<h4 id="b-debye-scattering-equation-dse">B. Debye Scattering Equation (DSE)</h4>
+<p>The coherent powder-averaged scattering intensity is:</p>
+<div class="arithmatex">\[
+I(q)
+=
+\sum_i
+|f_i(q)|^2
++
+2
+\sum_{i&lt;j}
+\operatorname{Re}
+\left[
+f_i(q)f_j^*(q)
+\right]
+\frac{\sin(qr_{ij})}{qr_{ij}}.
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(f_i(q)\)</span> is the scattering factor of atom <span class="arithmatex">\(i\)</span>.</li>
+<li><span class="arithmatex">\(r_{ij}\)</span> is the distance between atoms <span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(j\)</span>.</li>
+<li><span class="arithmatex">\(f_j^*(q)\)</span> is the complex conjugate of the scattering factor.</li>
+<li>
+<p>The sinc kernel is:</p>
+<div class="arithmatex">\[
+\operatorname{sinc}(qr)
+=
+\frac{\sin(qr)}{qr}.
+\]</div>
+</li>
+</ul>
+<p>For non-anomalous real form factors, the expression reduces to:</p>
+<div class="arithmatex">\[
+I(q)
+=
+\sum_i f_i^2(q)
++
+2\sum_{i&lt;j}
+f_i(q)f_j(q)
+\frac{\sin(qr_{ij})}{qr_{ij}}.
+\]</div>
+<p>The code treats the <span class="arithmatex">\(q\rightarrow0\)</span> limit safely:</p>
+<div class="arithmatex">\[
+\lim_{q\rightarrow0}
+\frac{\sin(qr)}{qr}
+=
+1.
+\]</div>
+<h4 id="c-complex-anomalous-scattering">C. Complex Anomalous Scattering</h4>
+<p>When:</p>
+<pre><code class="language-text">apply_anomalous = yes
+</code></pre>
+<p>the atomic scattering factor is:</p>
+<div class="arithmatex">\[
+f(q,\lambda)
+=
+f^0(q)
++
+f'(\lambda)
++
+if''(\lambda).
+\]</div>
+<p>The unordered-pair interference contribution is:</p>
+<div class="arithmatex">\[
+2
+\operatorname{Re}
+\left[
+f_i(q)f_j^*(q)
+\right]
+\operatorname{sinc}(qr_{ij}).
+\]</div>
+<p>User-supplied anomalous terms have priority:</p>
+<pre><code class="language-text">fprime_Cu = ...
+fdouble_Cu = ...
+</code></pre>
+<p>If user values are absent, the code attempts to obtain anomalous data from the <code>periodictable</code> energy-dependent tables. In that convention, the table value <span class="arithmatex">\(f_1\)</span> includes the forward-scattering <span class="arithmatex">\(Z\)</span> term, so the anomalous real correction is:</p>
+<div class="arithmatex">\[
+f'=f_1-Z,
+\]</div>
+<p>and:</p>
+<div class="arithmatex">\[
+f''=f_2.
+\]</div>
+<p>If no anomalous data are available, the code uses:</p>
+<div class="arithmatex">\[
+f'=0,
+\qquad
+f''=0,
+\]</div>
+<p>and prints a warning.</p>
+<h4 id="d-binned-pair-distance-debye-sum">D. Binned Pair-Distance Debye Sum</h4>
+<p>The binned calculation is not an RDF reconstruction. It groups physical unordered atom pairs into narrow radial-distance bins.</p>
+<p>The binned expression is:</p>
+<div class="arithmatex">\[
+I(q)
+=
+\sum_a
+N_a|f_a(q)|^2
++
+2
+\sum_{a\le b}
+\operatorname{Re}
+\left[
+f_a(q)f_b^*(q)
+\right]
+\sum_k
+N_{ab}(r_k)
+\frac{\sin(q\bar r_k)}{q\bar r_k}.
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(N_a\)</span> is the number of atoms of species <span class="arithmatex">\(a\)</span>.</li>
+<li><span class="arithmatex">\(N_{ab}(r_k)\)</span> is the number of unordered <span class="arithmatex">\(a\)</span>-<span class="arithmatex">\(b\)</span> pairs in distance bin <span class="arithmatex">\(k\)</span>.</li>
+<li><span class="arithmatex">\(\bar r_k\)</span> is the mean pair distance within the bin.</li>
+</ul>
+<p>The pairwise mode is exact for the included pair list. The binned mode is an approximation controlled by the radial bin width. It uses the mean distance in each bin, which reduces binning error compared with using only bin centers.</p>
+<p>The binned method does not use:</p>
+<ul>
+<li>Number density.</li>
+<li>Cluster volume.</li>
+<li>Ideal-gas baseline.</li>
+<li>RDF normalization.</li>
+<li>Accessible-fraction correction.</li>
+<li>Lorch window.</li>
+</ul>
+<p>Those quantities are not terms in the finite-configuration Debye scattering equation.</p>
+<h4 id="e-debyewaller-factor">E. Debye–Waller Factor</h4>
+<p>For an isotropic crystallographic displacement parameter <span class="arithmatex">\(B\)</span> in Å<span class="arithmatex">\(^2\)</span>, the atomic amplitude damping factor is:</p>
+<div class="arithmatex">\[
+T(q)
+=
+\exp\left[
+-\frac{Bq^2}{16\pi^2}
+\right]
+=
+\exp(-Bs^2).
+\]</div>
+<p>The code applies this factor only when:</p>
+<pre><code class="language-text">apply_debye_waller = yes
+</code></pre>
+<p>For a pair contribution, the amplitude factors multiply:</p>
+<div class="arithmatex">\[
+f_i(q)f_j^*(q)
+\rightarrow
+f_i(q)T_i(q)
+\left[
+f_j(q)T_j(q)
+\right]^*.
+\]</div>
+<p>For a finite-temperature MD snapshot, applying a static Debye–Waller factor can double count thermal disorder already present in the coordinates. This should be treated as a modeling decision.</p>
+<h4 id="f-measurement-corrections">F. Measurement Corrections</h4>
+<p>Intrinsic Debye scattering and experimental measurement corrections are separate:</p>
+<div class="arithmatex">\[
+I_{\mathrm{obs}}(2\theta)
+=
+\mathrm{Scale}
+\times
+L_p(2\theta)
+\times
+\left[
+I_{\mathrm{DSE}}(2\theta)
+\ast
+R(2\theta)
+\right].
+\]</div>
+<p>Here:</p>
+<ul>
+<li><span class="arithmatex">\(L_p\)</span> is an optional Lorentz–polarization factor.</li>
+<li><span class="arithmatex">\(R\)</span> is an instrumental-resolution function.</li>
+<li><code>Scale</code> is <code>scale_factor</code>.</li>
+</ul>
+<p>The Lorentz–polarization options are:</p>
+<ul>
+<li>
+<p>With polarization:</p>
+<div class="arithmatex">\[
+L_p(\theta)
+=
+\frac{
+1+\cos^2(2\theta)
+}{
+\sin^2\theta\cos\theta
+}.
+\]</div>
+</li>
+<li>
+<p>Lorentz only:</p>
+<div class="arithmatex">\[
+L(\theta)
+=
+\frac{
+1
+}{
+\sin^2\theta\cos\theta
+}.
+\]</div>
+</li>
+</ul>
+<p>These factors are measurement-geometry models, not intrinsic parts of the DSE. Their use should match the experimental geometry.</p>
+<p>The low-angle behavior may be numerically clipped through:</p>
+<pre><code class="language-text">LP_theta_min_clip_deg
+LP_max_clip
+</code></pre>
+<h4 id="g-instrumental-broadening">G. Instrumental Broadening</h4>
+<p>A constant Gaussian instrumental width may be used through:</p>
+<pre><code class="language-text">instrument_sigma_deg
+</code></pre>
+<p>For angle-dependent Caglioti broadening, the code uses:</p>
+<div class="arithmatex">\[
+\mathrm{FWHM}^2
+=
+U\tan^2\theta
++
+V\tan\theta
++
+W.
+\]</div>
+<p>The corresponding Gaussian standard deviation is:</p>
+<div class="arithmatex">\[
+\sigma(\theta)
+=
+\frac{
+\mathrm{FWHM}(\theta)
+}{
+2\sqrt{2\ln2}
+}.
+\]</div>
+<p>The variable-width implementation distributes intensity from each source point using the width at that source point and an area-normalized Gaussian kernel.</p>
+<h4 id="h-marchdollase-texture">H. March–Dollase Texture</h4>
+<p>March–Dollase texture correction is not applied to the isotropic Debye scattering pattern.</p>
+<p>A March–Dollase correction depends on the angle between a reflection vector and a preferred-orientation axis. It is defined per reflection family <span class="arithmatex">\(hkl\)</span>. Since the DSE result is already an isotropic orientational average and has no individual <span class="arithmatex">\(hkl\)</span> reflection vectors, a <span class="arithmatex">\(2\theta\)</span>-only March–Dollase multiplier is not physically valid.</p>
+<p>If:</p>
+<pre><code class="language-text">apply_march_dollase = yes
+</code></pre>
+<p>is requested, the code raises an explanatory error. Use the Kinematical module for reflection-resolved texture modeling.</p>
+<h3 id="key-features_2">Key Features</h3>
+<ul>
+<li>
+<p><strong>Finite nonperiodic structures</strong>: Suitable for nanoparticles, isolated clusters, amorphous structures, liquid snapshots, and extracted defective regions.</p>
+</li>
+<li>
+<p><strong>Pairwise mode</strong>: Exact Debye scattering sum over the included unordered pair list.</p>
+</li>
+<li>
+<p><strong>Binned mode</strong>: Fast pair-distance-binned approximation to the same DSE.</p>
+</li>
+<li>
+<p><strong>Automatic method selection</strong>:</p>
+<ul>
+<li><code>pairwise</code> for small systems.</li>
+<li><code>binned</code> for larger systems.</li>
+<li><code>auto</code> selects according to <code>direct_threshold</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Anomalous scattering</strong>: Supports complex form factors.</p>
+</li>
+<li>
+<p><strong>Partial intensities</strong>: Can report species-pair contributions. Like-species partial contributions include the corresponding self-scattering term.</p>
+</li>
+<li>
+<p><strong>Pair cutoff warning</strong>: A user-supplied cutoff smaller than the maximum pair distance truncates the DSE and is reported as such.</p>
+</li>
+<li>
+<p><strong>Structural diagnostics</strong>: RDF and pair-distance outputs are optional and never modify the calculated DSE intensity.</p>
+</li>
+</ul>
+<h3 id="input-parameters_2">Input Parameters</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>I. Input</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>xyz_file</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;">Required</td>
+<td style="text-align: left;">Input structure file.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>species_mode</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>chemical_symbols</code></td>
+<td style="text-align: left;">Species interpretation: <code>chemical_symbols</code>, <code>atomic_numbers</code>, or <code>lammps_types</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>type_map</code></td>
+<td style="text-align: left;">Map</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Mapping for <code>lammps_types</code>, for example <code>1:Cu,2:Zn</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>wavelength</code></td>
+<td style="text-align: left;">Enum/Float</td>
+<td style="text-align: left;"><code>CuKa</code></td>
+<td style="text-align: left;">Radiation source. <code>CuKa = 1.54184</code> Å in this module.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>II. Angular Grid</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>two_theta_min</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>10.0</code></td>
+<td style="text-align: left;">Minimum <span class="arithmatex">\(2\theta\)</span> in degrees.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>two_theta_max</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>90.0</code></td>
+<td style="text-align: left;">Maximum <span class="arithmatex">\(2\theta\)</span> in degrees.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>q_max</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Alternative upper bound in Å<span class="arithmatex">\(^{-1}\)</span>. If both <code>q_max</code> and <code>two_theta_max</code> are supplied, <code>two_theta_max</code> takes precedence.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>n_points</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>500</code></td>
+<td style="text-align: left;">Number of angular-grid points.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>III. Calculation Method</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>debye_method</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>auto</code></td>
+<td style="text-align: left;"><code>pairwise</code>, <code>binned</code>, or <code>auto</code>. <code>histogram</code> is accepted as a deprecated spelling of <code>binned</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>direct_threshold</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>2000</code></td>
+<td style="text-align: left;">Atom count below which <code>auto</code> selects pairwise calculation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bins_per_angstrom</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>20</code></td>
+<td style="text-align: left;">Radial bin resolution used in <code>binned</code> mode.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_distance</code></td>
+<td style="text-align: left;">Float/String</td>
+<td style="text-align: left;"><code>adaptive</code></td>
+<td style="text-align: left;">Maximum pair distance for binned calculation. Use <code>adaptive</code> for the exact largest pair distance.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_interaction_distance</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Explicit pair cutoff for pairwise calculation. A smaller value truncates the DSE.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_pairs</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>2000000000</code></td>
+<td style="text-align: left;">Pair-count safety cap.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>allow_large_pair_count</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Override the pair-count safety cap.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IV. Memory</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>chunk_size</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>2048</code></td>
+<td style="text-align: left;">Atom centres per neighbour-search chunk. Only used when the pair sum is truncated (a cutoff below the largest pair distance); it affects memory use and speed, not the result.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pair_subchunk_size</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>200000</code></td>
+<td style="text-align: left;">Number of pairs evaluated per reciprocal-space subchunk.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_pair_matrix_elements</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>100000000</code></td>
+<td style="text-align: left;">Maximum <span class="arithmatex">\(n_q\times n_{\mathrm{pairs}}\)</span> matrix size.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_distance_block_elements</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>4000000</code></td>
+<td style="text-align: left;">Memory limit for direct pair-distance blocks.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>V. Physics</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apply_anomalous</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Enable anomalous corrections <span class="arithmatex">\(f'\)</span> and <span class="arithmatex">\(f''\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>fprime_&lt;El&gt;</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">Table/default</td>
+<td style="text-align: left;">User override for <span class="arithmatex">\(f'\)</span> of an element.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>fdouble_&lt;El&gt;</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">Table/default</td>
+<td style="text-align: left;">User override for <span class="arithmatex">\(f''\)</span> of an element.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apply_debye_waller</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Apply isotropic Debye–Waller damping.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>debye_waller_factors</code></td>
+<td style="text-align: left;">String</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Element-specific <span class="arithmatex">\(B\)</span> values in Å<span class="arithmatex">\(^2\)</span>, for example <code>Zn=0.5,Cu=0.6</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>B_&lt;El&gt;</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.0</code></td>
+<td style="text-align: left;">Per-element Debye–Waller parameter in Å<span class="arithmatex">\(^2\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>VI. Measurement Corrections</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>experimental_correction</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Enables LP, instrumental broadening, and Debye–Waller damping, but only where <code>apply_LP</code>, <code>apply_instrumental_broadening</code> or <code>apply_debye_waller</code> is not set explicitly; an explicit value always wins. In the GUI an unticked correction box is left unset, so this switch still enables it. It does not automatically enable anomalous scattering.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apply_LP</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Apply Lorentz–polarization correction.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>LP_variant</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>with_polarization</code></td>
+<td style="text-align: left;"><code>with_polarization</code>, <code>lorentz_only</code>, or <code>none</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>LP_theta_min_clip_deg</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.5</code></td>
+<td style="text-align: left;">Low-angle clipping threshold for LP evaluation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>LP_max_clip</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>10000</code></td>
+<td style="text-align: left;">Maximum LP value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apply_instrumental_broadening</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Apply instrumental broadening.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>instrument_sigma_deg</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.05</code></td>
+<td style="text-align: left;">Constant Gaussian <span class="arithmatex">\(\sigma\)</span> in degrees <span class="arithmatex">\(2\theta\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>use_caglioti</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Use Caglioti angle-dependent FWHM.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>caglioti_U</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.01</code></td>
+<td style="text-align: left;">Caglioti <span class="arithmatex">\(U\)</span> coefficient.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>caglioti_V</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.01</code></td>
+<td style="text-align: left;">Caglioti <span class="arithmatex">\(V\)</span> coefficient.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>caglioti_W</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>0.01</code></td>
+<td style="text-align: left;">Caglioti <span class="arithmatex">\(W\)</span> coefficient.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>scale_factor</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>1.0</code></td>
+<td style="text-align: left;">Global intensity scale factor.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>VII. Normalisation</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>normalize_intensity</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Normalize calculated intensity.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>normalize_max</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;"><code>100.0</code></td>
+<td style="text-align: left;">Target maximum for normalized intensity.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>VIII. Diagnostics</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>compute_rdf</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Calculate partial RDFs for structural diagnostics.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_rdf</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Plot partial RDFs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rdf_max_distance</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">Automatic</td>
+<td style="text-align: left;">Maximum RDF distance.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rdf_sample_size</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">Number of centers sampled for RDF; <code>0</code> uses all atoms.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apply_accessible_fraction</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Apply finite-cluster boundary correction to reported RDFs only.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rdf_access_dirs</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>200</code></td>
+<td style="text-align: left;">Directions sampled for RDF accessible-fraction estimation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rdf_access_centers</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>500</code></td>
+<td style="text-align: left;">Centers sampled for RDF accessible-fraction estimation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>compute_pair_distribution</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Write pair-distance probability density and cumulative coordination diagnostic.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pdf_subset_size</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>5000</code></td>
+<td style="text-align: left;">Maximum atom count sampled for pair-distance diagnostics.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pdf_bins</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>100</code></td>
+<td style="text-align: left;">Number of pair-distance bins.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_pdf</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Plot the pair-distance diagnostic.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pdf_output</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;"><code>pair_distance_distribution.txt</code></td>
+<td style="text-align: left;">Output file for the pair-distance diagnostic.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>random_seed</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>0</code></td>
+<td style="text-align: left;">Random seed for reproducible subsampling.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IX. Output &amp; Plotting</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>output_pattern</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;"><code>debye_pattern.txt</code></td>
+<td style="text-align: left;">Main diffraction pattern output.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>partial_output</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;"><code>debye_partials.txt</code></td>
+<td style="text-align: left;">Species-pair partial-intensity output.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>output_dir</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;"><code>.</code></td>
+<td style="text-align: left;">Directory for the partial-RDF output files (created if missing).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>compute_partial_intensities</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>yes</code></td>
+<td style="text-align: left;">Write species-resolved intensity contributions.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>make_plot</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>yes</code></td>
+<td style="text-align: left;">Generate main Debye pattern plot.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_filename</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;"><code>debye_plot.png</code></td>
+<td style="text-align: left;">Main plot output.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_dpi</code></td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;"><code>300</code></td>
+<td style="text-align: left;">Plot resolution.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>show_plot</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Display figure interactively.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot_partials</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>no</code></td>
+<td style="text-align: left;">Plot partial intensity contributions.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>verbose</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>yes</code></td>
+<td style="text-align: left;">Print detailed diagnostics.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="summary-of-use-cases">Summary of Use Cases</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Module</th>
+<th style="text-align: left;">Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>XRD-ReciprocalSum</strong></td>
+<td style="text-align: left;">Reciprocal-space calculations, periodic orthogonal simulation cells.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>XRD-Kinematical</strong></td>
+<td style="text-align: left;">Indexed powder diffraction from periodic crystallographic structures — unit cells and periodic simulation boxes, including defective ones.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>XRD-Debye Scattering</strong></td>
+<td style="text-align: left;">Finite nanoparticles, clusters, amorphous structures, liquid snapshots, and any aperiodic configuration with free surfaces.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="notes_2">Notes</h2>
+<p>To obtain highly accurate XRD data for defects, multiphase materials, and polycrystals, first analyze the structure using the <strong>Structure Analyzer and Crystallographic Identification</strong> module. By using phase-specific or structurally isolated files rather than the entire system at once, you can determine which reflections correspond to particular planes of each identified phase.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

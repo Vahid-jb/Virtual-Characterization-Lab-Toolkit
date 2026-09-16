@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Structure Analyzer - VCL Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">VCL Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Input_Converter_Docs/" class="nav-link">Input Converter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../SAED_Docs/" class="nav-link">SAED</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Structure Analyzer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Vibrational_Analysis_Docs/" class="nav-link">Vibrational Analysis</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../XRD_Docs/" class="nav-link">XRD</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../SAED_Docs/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Vibrational_Analysis_Docs/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#structure-analyzer-and-crystallographic-identification" class="nav-link">Structure Analyzer and Crystallographic Identification</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#part-i-crystallographic-identification" class="nav-link">Part I: Crystallographic Identification</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#part-ii-lattice-parameter-estimation" class="nav-link">Part II: Lattice Parameter Estimation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#notes" class="nav-link">Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="structure-analyzer-and-crystallographic-identification">Structure Analyzer and Crystallographic Identification</h1>
+<h2 id="overview">Overview</h2>
+<p>The <strong>Structure Analyzer</strong> module provides a comprehensive workflow for identifying atomic structures and extracting precise lattice parameters from simulation data. The process is divided into two sequential stages:</p>
+<ul>
+<li><strong>Crystallographic Identification</strong>: Classifies atoms into structural phases (FCC, BCC, HCP, etc.) and separates them into distinct files.</li>
+<li><strong>Lattice Parameter Estimation</strong>: Analyzes a specific phase to determine its lattice constants (<span class="arithmatex">\(a, b, c\)</span>) and angles (<span class="arithmatex">\(\alpha, \beta, \gamma\)</span>) using up to three statistical methods.</li>
+</ul>
+<hr />
+<h2 id="part-i-crystallographic-identification">Part I: Crystallographic Identification</h2>
+<h3 id="physics-and-methodology">Physics and Methodology</h3>
+<p>This module utilizes <a href="https://iopscience.iop.org/article/10.1088/0965-0393/24/5/055007">Polyhedral Template Matching (PTM)</a> to classify the local structural environment of each atom. PTM is a robust method capable of identifying common crystal structures even at finite temperatures where thermal vibrations distort positions.</p>
+<p>The method compares the local atomic neighborhood against ideal structural templates (polyhedra). The quality of the match is quantified by the <strong>Root-Mean-Square Deviation (RMSD)</strong>:</p>
+<div class="arithmatex">\[ RMSD = \sqrt{ \frac{1}{N} \sum_{i=1}^{N} | \mathbf{r}_i - \mathbf{r}_{i}^{ideal} |^2 } \]</div>
+<p>Where <span class="arithmatex">\(\mathbf{r}_i\)</span> are the coordinates of the neighbors and <span class="arithmatex">\(\mathbf{r}_{i}^{ideal}\)</span> are the template coordinates. If the RMSD is below a specified cutoff, the structure is identified.</p>
+<p><strong>Supported Structures:</strong></p>
+<ul>
+<li>Face-Centered Cubic (FCC)</li>
+<li>Body-Centered Cubic (BCC)</li>
+<li>Hexagonal Close-Packed (HCP)</li>
+<li>Icosahedral (ICO)</li>
+<li>Simple Cubic (SC)</li>
+<li>Diamond (Cubic &amp; Hexagonal)</li>
+<li>Graphene</li>
+</ul>
+<p><strong>Grain Segmentation</strong>:
+Following PTM, the module applies a <a href="https://arxiv.org/abs/1806.01664">graph clustering algorithm</a> to group connected atoms of the same phase into grains. This allows for the filtration of small, insignificant ordered clusters (noise) based on a minimum grain size.</p>
+<h3 id="input-parameters">Input Parameters</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>input_file</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;">Path to the atomic structure file (e.g., <code>.xyz</code>, <code>.lammpstrj</code>).</td>
+<td style="text-align: left;">Source data for analysis.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>input_file_type</code></td>
+<td style="text-align: left;">Enum</td>
+<td style="text-align: left;"><code>single</code> or <code>traj</code>.</td>
+<td style="text-align: left;">Specifies if the file is a single snapshot or a trajectory.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>trj_timestep</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">(Trajectory only) The specific timestep to analyze.</td>
+<td style="text-align: left;">Selects the frame from a trajectory file.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>RMSD_cutoff</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">PTM sensitivity threshold (Default: 0.1).</td>
+<td style="text-align: left;">Higher values allow more distorted atoms to be classified but increase false positives.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_grain_size</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Minimum number of atoms per grain.</td>
+<td style="text-align: left;">Filters out small clusters. The default of 5 is very permissive — a five-atom "grain" is usually a classification artifact near a dislocation, stacking fault or surface rather than a grain. Raise it (hundreds of atoms) for genuine grain statistics; keep it low only when the goal is to find small ordered clusters.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="outputs">Outputs</h3>
+<ol>
+<li><strong>Phase Distribution Report</strong>: A text summary (<code>structure_analysis.txt</code>) showing the percentage and elemental composition of each detected phase.</li>
+<li><strong>Phase-Separated Files</strong>: Separate coordinate files for each identified phase (e.g., <code>parent_phase_fcc.xyz</code>, <code>parent_phase_bcc.xyz</code>, <code>parent_phase_other.xyz</code>). These serve as inputs for Part II.</li>
+<li><strong>Grain Details</strong>: A list of identified grains, their sizes (atom count), and mean orientation quaternions.</li>
+<li><strong>Phase Manifest</strong> (<code>ptm_phases.json</code>): A machine-readable summary of the detected phases. The GUI reads it to build the 3D phase view.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Key</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>schema_version</code></td>
+<td style="text-align: left;">Format version of the manifest (currently <code>1</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>input_file</code></td>
+<td style="text-align: left;">The analysed structure file.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rmsd_cutoff</code></td>
+<td style="text-align: left;">RMSD cutoff used for the run.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>total_atoms</code></td>
+<td style="text-align: left;">Number of atoms in the analysed frame.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>phases</code></td>
+<td style="text-align: left;">One entry per detected phase, with the keys below.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Phase key</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>name</code></td>
+<td style="text-align: left;">Phase name as in the report: <code>Other</code>, <code>FCC</code>, <code>HCP</code>, <code>BCC</code>, <code>ICO</code>, <code>SC</code>, <code>Cubic diamond</code>, <code>Hexagonal diamond</code> or <code>Graphene</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>structure_type</code></td>
+<td style="text-align: left;">PTM structure type ID: 0 Other, 1 FCC, 2 HCP, 3 BCC, 4 ICO, 5 SC, 6 cubic diamond, 7 hexagonal diamond, 8 graphene.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>count</code></td>
+<td style="text-align: left;">Number of atoms in the phase.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>percentage</code></td>
+<td style="text-align: left;">Share of all atoms, in percent.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>composition</code></td>
+<td style="text-align: left;">Atom count per element, e.g. <code>{"Zn": 16300, "Cu": 15659}</code>. Empty if the input file has no element names.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>color</code></td>
+<td style="text-align: left;">OVITO's RGB color for the structure type, with components from 0 to 1.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">Name of the phase-separated <code>.xyz</code> file in the output directory.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3d-phase-view-gui">3D Phase View (GUI)</h3>
+<p>After a successful run, the GUI loads every phase listed in <code>ptm_phases.json</code> into an interactive OVITO viewport. Atoms are colored with OVITO's standard PTM colors, e.g. FCC green, HCP red, BCC blue and Other white. Drag to rotate the view and use the mouse wheel to zoom.</p>
+<ul>
+<li><strong>Phases</strong> tab: lists each phase with its color, atom count, share and composition. Untick a phase to hide it in the 3D view.</li>
+<li><strong>Report</strong> tab: the full text report.</li>
+<li><strong>Color by</strong>: switches between phase colors and element colors.</li>
+<li><strong>Zoom to fit</strong>: moves the camera so that all visible atoms fit the view.</li>
+</ul>
+<p>The GUI deletes <code>ptm_phases.json</code> before each run, so the view always shows the current run. Phase files left over from earlier runs in the same output directory are ignored.</p>
+<hr />
+<h2 id="part-ii-lattice-parameter-estimation">Part II: Lattice Parameter Estimation</h2>
+<h3 id="physics-and-methodology_1">Physics and Methodology</h3>
+<p>Once a specific phase has been isolated, this module determines its unit cell parameters. To ensure accuracy across different sample types (bulk, datasets with defects, finite clusters), the module employs <strong>three distinct statistical methods</strong> and reports results from all applicable ones.</p>
+<h4 id="method-1-nearest-neighbour-distance-from-the-rdf">Method 1: Nearest-Neighbour Distance from the RDF</h4>
+<p>A robust baseline, effective for finite clusters and non-periodic inputs.</p>
+<ol>
+<li><strong>Radial distribution function</strong>: builds a volume-normalised <span class="arithmatex">\(g(r)\)</span> from KD-tree
+    neighbour queries around randomly chosen interior atoms.</li>
+<li><strong>First shell</strong>: takes the centroid of the first <span class="arithmatex">\(g(r)\)</span> peak as the nearest-neighbour
+    distance <span class="arithmatex">\(d_{nn}\)</span>.</li>
+<li><strong>Derivation</strong>: converts <span class="arithmatex">\(d_{nn}\)</span> to the conventional lattice constant using the
+    assumed geometry (<span class="arithmatex">\(a_{fcc} = d_{nn}\sqrt{2}\)</span>, <span class="arithmatex">\(a_{bcc} = 2 d_{nn}/\sqrt{3}\)</span>,
+    <span class="arithmatex">\(a_{hcp} = d_{nn}\)</span>).</li>
+</ol>
+<h4 id="method-2-vector-statistics">Method 2: Vector Statistics</h4>
+<p>A rotation-invariant approach for bulk and polycrystalline systems. It reconstructs the
+lattice geometry from the distribution of interatomic vectors:</p>
+<ol>
+<li><strong>Directional clustering</strong>: projects first-shell interatomic vectors onto the unit
+    sphere and clusters them (DBSCAN) to find the primary lattice directions,
+    independently of sample orientation. A direction and its antipode are merged into a
+    single lattice axis (matching on <span class="arithmatex">\(|\cos\theta|\)</span>).</li>
+<li><strong>Lattice reconstruction</strong>: selects the best linearly independent triplet of
+    cluster centres, scoring by cell volume and cluster population.</li>
+<li><strong>Reduced primitive cell</strong>: the measured basis is reduced over short integer
+    combinations and put into the Niggli sign convention, so the reported primitive
+    cell is reproducible and matches tabulated values — FCC as <span class="arithmatex">\((60,60,60)\)</span> and BCC as
+    <span class="arithmatex">\((109.47,109.47,109.47)\)</span>, stable across random seeds. Cluster-centroid signs are
+    arbitrary and the clustering may return any three of the six <span class="arithmatex">\(\langle110\rangle\)</span>
+    axes, so without this the same lattice came out as <span class="arithmatex">\((60,60,90)\)</span> or
+    <span class="arithmatex">\((70.53,70.53,109.47)\)</span> depending on the run.</li>
+<li>
+<p><strong>Conventional cell, measured not assumed</strong>: For a phase identified as FCC or
+    BCC, the conventional cell axes are obtained from short integer combinations
+    of the measured primitive vectors. The code selects the most nearly
+    orthogonal triplet whose volume equals <span class="arithmatex">\(N V_{\text{prim}}\)</span>, where <span class="arithmatex">\(N=4\)</span>
+    for FCC and <span class="arithmatex">\(N=2\)</span> for BCC. This basis-independent procedure preserves
+    measured lattice distortions rather than automatically assigning
+    <span class="arithmatex">\(\alpha=\beta=\gamma=90^\circ\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">imposed <span class="arithmatex">\(c/a\)</span> (BCT test)</th>
+<th style="text-align: right;">reported <span class="arithmatex">\(a\)</span></th>
+<th style="text-align: right;"><span class="arithmatex">\(b\)</span></th>
+<th style="text-align: right;"><span class="arithmatex">\(c\)</span></th>
+<th style="text-align: right;">measured <span class="arithmatex">\(c/a\)</span></th>
+<th style="text-align: left;"><code>cell_type</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2.8713</td>
+<td style="text-align: right;">2.8713</td>
+<td style="text-align: right;">2.8713</td>
+<td style="text-align: right;">1.0000</td>
+<td style="text-align: left;"><code>conventional_cubic</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">1.05</td>
+<td style="text-align: right;">2.8662</td>
+<td style="text-align: right;">2.8662</td>
+<td style="text-align: right;">3.0095</td>
+<td style="text-align: right;">1.0500</td>
+<td style="text-align: left;"><code>conventional_distorted</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">1.15</td>
+<td style="text-align: right;">2.9661</td>
+<td style="text-align: right;">2.9661</td>
+<td style="text-align: right;">3.4110</td>
+<td style="text-align: right;">1.1500</td>
+<td style="text-align: left;"><code>conventional_distorted</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">1.41</td>
+<td style="text-align: right;">2.8648</td>
+<td style="text-align: right;">2.8691</td>
+<td style="text-align: right;">4.0575</td>
+<td style="text-align: right;">1.4163</td>
+<td style="text-align: left;"><code>conventional_distorted</code></td>
+</tr>
+</tbody>
+</table>
+<p>The output includes <code>cubic_consistent</code>, <code>axial_ratio_c_over_a</code>,
+<code>max_length_deviation</code>, and <code>max_angle_deviation_deg</code>. A non-cubic result
+includes an explanatory <code>note</code>.</p>
+<p>The measured primitive-cell data are also reported as <code>a_primitive</code>,
+<code>alpha_primitive</code>, <code>primitive_vectors</code>, and <code>volume_primitive</code>.
+<code>cell_type</code> indicates whether the reported <span class="arithmatex">\(a\)</span>, <span class="arithmatex">\(b\)</span>, <span class="arithmatex">\(c\)</span>,
+<span class="arithmatex">\(\alpha\)</span>, <span class="arithmatex">\(\beta\)</span>, and <span class="arithmatex">\(\gamma\)</span> describe a primitive cell, a
+conventional cubic cell, or a conventional distorted cell.</p>
+</li>
+</ol>
+<h4 id="method-3-coordination-shell-ratios">Method 3: Coordination-Shell Ratios</h4>
+<p>Identifies the structure and refines the lattice constant from the positions of the
+first several coordination shells.</p>
+<ol>
+<li><strong>Shell extraction</strong>: locates the first four peaks of the volume-normalised <span class="arithmatex">\(g(r)\)</span>,
+    each to sub-bin precision via a local centroid.</li>
+<li>
+<p><strong>Ratio matching</strong>: compares the measured ratios <span class="arithmatex">\(d_i/d_1\)</span> against the ideal ratios
+    for each candidate structure. Ratios are scale-free, so this genuinely discriminates:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Structure</th>
+<th style="text-align: left;"><span class="arithmatex">\(d_2/d_1\)</span></th>
+<th style="text-align: left;"><span class="arithmatex">\(d_3/d_1\)</span></th>
+<th style="text-align: left;"><span class="arithmatex">\(d_4/d_1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">FCC</td>
+<td style="text-align: left;">1.4142</td>
+<td style="text-align: left;">1.7321</td>
+<td style="text-align: left;">2.0000</td>
+</tr>
+<tr>
+<td style="text-align: left;">BCC</td>
+<td style="text-align: left;">1.1547</td>
+<td style="text-align: left;">1.6330</td>
+<td style="text-align: left;">1.9149</td>
+</tr>
+<tr>
+<td style="text-align: left;">HCP</td>
+<td style="text-align: left;">1.4142</td>
+<td style="text-align: left;">1.6330</td>
+<td style="text-align: left;">1.7321</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>Scoring</strong>: the RMS relative residual is reported per candidate as <code>scores</code>, and
+    <code>reliability_score</code> is derived from it. On generated crystals the correct structure
+    scores <span class="arithmatex">\(&lt;0.01\)</span> (stable to <span class="arithmatex">\(0.10\)</span> Å of thermal displacement) while the wrong ones
+    score <span class="arithmatex">\(&gt;0.11\)</span>; a uniform random point cloud scores <span class="arithmatex">\(\approx 0.33\)</span>.</p>
+</li>
+<li>
+<p><strong>Gaussian refinement</strong>: a Gaussian is also fitted to the first peak of the
+    nearest-neighbour histogram and reported as <code>d_nn_fit</code>:</p>
+<div class="arithmatex">\[ f(r) = A \cdot \exp\left( - \frac{1}{2} \left( \frac{r - \mu}{\sigma} \right)^2 \right) + BG \]</div>
+</li>
+</ol>
+<h3 id="honesty-of-the-reported-result">Honesty of the reported result</h3>
+<p>The module refuses to report a structure it cannot support:</p>
+<ul>
+<li>If the best shell-ratio residual exceeds <span class="arithmatex">\(0.06\)</span>, the structure is reported as
+    <code>UNKNOWN</code>, no <span class="arithmatex">\(a,b,c\)</span> are emitted, and only <span class="arithmatex">\(d_{nn}\)</span> is given. Amorphous and liquid
+    configurations land here.</li>
+<li>If fewer than two shells are resolved, the structure is <strong>not</strong> guessed: <span class="arithmatex">\(d_{nn}\)</span>
+    fixes the scale but carries no information about which lattice it is.</li>
+<li><code>ambiguous</code> is set whenever the leading candidate is FCC or HCP. Those two share
+    shells 1 and 2 exactly (<span class="arithmatex">\(1, \sqrt{2}\)</span>) and first differ at shell 3, where the HCP
+    shell (<span class="arithmatex">\(r = c\)</span>) has multiplicity 2 against FCC's 24 — too weak to resolve reliably
+    in an RDF. <strong>PTM (Part I) is the authority for that distinction</strong>, which is why the
+    two-stage workflow exists.</li>
+<li>
+<p>For an HCP structure, the output field <code>c_source</code>
+    indicates whether the axial lattice parameter <span class="arithmatex">\(c\)</span> was measured from a
+    resolved coordination shell (<code>c_axis_shell</code>) or assigned using the ideal HCP
+    ratio (<code>assumed_ideal</code>):</p>
+<div class="arithmatex">\[
+\frac{c}{a}=\sqrt{\frac{8}{3}}.
+\]</div>
+<p>The <span class="arithmatex">\(c\)</span>-axis shell can be difficult to resolve because it contains only two
+neighbors and may overlap with nearby coordination shells. Therefore, treat
+the reported HCP <span class="arithmatex">\(c/a\)</span> value as assumed unless <code>c_source = c_axis_shell</code>.
+For strongly non-ideal HCP structures, in-plane and out-of-plane neighbor
+distances can overlap. In such cases, the reported <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(c/a\)</span> values
+should be interpreted cautiously.</p>
+</li>
+<li>
+<p>When PTM supplies a phase, the independent RDF classification is still run and
+    reported as <code>rdf_detected_structure</code> / <code>rdf_agrees_with_structure</code>, so a
+    disagreement is visible rather than hidden.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>Part I and Part II answer different questions.</strong> PTM classifies each atom's <em>local
+polyhedron</em> against ideal templates, so strained material — dislocation cores, free
+surfaces, grain boundaries — is binned as <code>Other</code> even when it sits on a perfectly
+good lattice. Part II measures the <em>average</em> lattice of whatever atoms it is given.
+Running Part II on a <code>parent_phase_other.xyz</code> file can therefore legitimately return
+the parent lattice.</p>
+</blockquote>
+<h3 id="neighbour-cutoff">Neighbour cutoff</h3>
+<p><code>vector_stats_max_cutoff</code> is an absolute distance in Ångström and is therefore not
+transferable between materials, phases, strains or temperatures. Set it to <code>auto</code> to
+scale it from the measured nearest-neighbour distance (<span class="arithmatex">\(1.45\,d_{nn}\)</span>), which is the
+recommended setting for exploratory work. A fixed value below <span class="arithmatex">\(1.15\,d_{nn}\)</span> truncates
+the first coordination shell and now raises an explicit warning.</p>
+<h3 id="periodic-input">Periodic input</h3>
+<p>When a cell is available it is used for neighbour searching: a <span class="arithmatex">\(3\times3\times3\)</span> block
+of periodic images is built, so atoms near a box face keep their full neighbourhood.
+Shell <em>positions</em> are insensitive to this — truncating a neighbour sphere removes whole
+neighbours but does not move the distances of those that remain, and the shell centroid
+is symmetric — so the lattice constant was already unbiased. Coordination <em>counts</em> are
+not: for a <span class="arithmatex">\(4\times4\times4\)</span> FCC box the modal coordination number came out 8 instead
+of 12 without images, which matters for the no-PTM fallback classifier.</p>
+<p>If the input carries a cell (extended-XYZ <code>Lattice="..."</code>, or a format OVITO reads),
+the simulation box is reported separately as <code>supercell_A/B/C</code> and is <strong>not</strong> used as
+the unit cell — a <span class="arithmatex">\(10\times10\times10\)</span> FCC box has <span class="arithmatex">\(A = 36.15\)</span> Å, not <span class="arithmatex">\(a = 3.615\)</span> Å.
+The lattice constant is always measured from the atoms. The ratio box<span class="arithmatex">\(/a\)</span> is reported as
+<code>supercell_repeats</code> and flagged via <code>supercell_commensurate</code>, which is a useful
+consistency check: it should be near-integer for a commensurate box.</p>
+<h3 id="input-parameters_1">Input Parameters</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>input</code></td>
+<td style="text-align: left;">File Path</td>
+<td style="text-align: left;"><code>parent_phase_*.xyz</code></td>
+<td style="text-align: left;">The phase file generated in Part I.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>verbose</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>on</code></td>
+<td style="text-align: left;">Enables detailed logging of the vector search process.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>use_advanced_methods</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>on</code></td>
+<td style="text-align: left;">Enables Method 2 (Vector Statistics) and Method 3 (Coordination-Shell Ratios).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rmsd_cutoff</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">0.1</td>
+<td style="text-align: left;">RMSD cutoff for the PTM classification run by the lattice detector.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plot</code></td>
+<td style="text-align: left;">Boolean</td>
+<td style="text-align: left;"><code>off</code></td>
+<td style="text-align: left;">Generates the comparison-histogram plot.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vector_stats_k_nn</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">Number of neighbors for Method 2 (recommended: 14 for BCC, 18 for FCC).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vector_stats_max_cutoff</code></td>
+<td style="text-align: left;">Float or <code>auto</code></td>
+<td style="text-align: left;">5.0 Å</td>
+<td style="text-align: left;">Physical range limit for the neighbour search. Absolute distances are material-specific; <code>auto</code> sets <span class="arithmatex">\(1.45\,d_{nn}\)</span> from the measured nearest-neighbour distance. <code>auto</code> is accepted in parameter files and on the command line; the GUI field is numeric only.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vector_stats_dbscan_eps</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">0.07</td>
+<td style="text-align: left;">Direction-cluster tolerance, as a chord distance between unit vectors (0.07 corresponds to about 4°).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vector_stats_merge_threshold</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">0.85</td>
+<td style="text-align: left;">|cos θ| above which two direction clusters are treated as the same lattice axis.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vector_stats_min_neighbors</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">DBSCAN <code>min_samples</code> for a valid direction cluster.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vector_stats_random_seed</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">42</td>
+<td style="text-align: left;">Seeds all atom sampling; identical inputs give identical output.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vector_stats_tolerance_factor</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">0.12</td>
+<td style="text-align: left;">Relative width of the first-shell vector filter.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vector_stats_sample_size</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">3000</td>
+<td style="text-align: left;">Atoms sampled for vector statistics.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vector_stats_hist_bins</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">300</td>
+<td style="text-align: left;">Histogram bins for the diagnostics.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>neighbor_k</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">Neighbours per atom for the diagnostic nearest-neighbour statistics.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ls_sample_size</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">2000</td>
+<td style="text-align: left;">Atoms sampled for the NN/RDF statistics.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ls_k_neighbors</code></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Neighbours per atom for the KD-tree query.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ls_bin_width</code></td>
+<td style="text-align: left;">Float</td>
+<td style="text-align: left;">0.01</td>
+<td style="text-align: left;">Bin width in Å for the nearest-neighbour histogram fit.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ls_use_periodic</code></td>
+<td style="text-align: left;">Boolean/Auto</td>
+<td style="text-align: left;">Auto</td>
+<td style="text-align: left;">Forces Periodic Boundary Conditions (PBC) for Method 3. Requires a cell in the input file; otherwise the run is non-periodic regardless.</td>
+</tr>
+</tbody>
+</table>
+<p>British spellings (<code>neighbour_k</code>, <code>ls_k_neighbours</code>, <code>vector_stats_min_neighbours</code>, <code>vector_stats_k_nn_neighbours</code>) are
+accepted as aliases. Any key that is neither recognised nor an alias now produces an
+explicit warning rather than being silently ignored. Parameter files are read as UTF-8.</p>
+<p><code>vector_stats_n_trials</code> is accepted for backward compatibility but is <strong>not used</strong>: the
+basis search is an exhaustive scan over at most six candidate directions, so there is no
+trial loop for it to control.</p>
+<h3 id="outputs_1">Outputs</h3>
+<ol>
+<li><strong>Lattice Parameters</strong> (per method), written to <code>&lt;input&gt;_lattice_analysis.txt</code>:<ul>
+<li>Lengths <span class="arithmatex">\(a, b, c\)</span> (Å) and angles <span class="arithmatex">\(\alpha, \beta, \gamma\)</span> (°), with <code>cell_type</code>
+    stating whether these are the conventional or the primitive cell</li>
+<li><code>d_nn</code> and <code>d_nn_source</code>; <code>d_nn_median</code> as a diagnostic</li>
+<li><code>shell_distances</code>, <code>shell_ratios</code>, <code>shell_ratio_error</code> and per-structure <code>scores</code></li>
+<li><code>volume</code>; plus <code>primitive_vectors</code> and <code>volume_primitive</code> for Method 2</li>
+<li><code>supercell_*</code> and <code>supercell_repeats</code> for periodic input</li>
+</ul>
+</li>
+<li><strong>Reliability</strong>: <code>reliability_score</code> (0–1, from the shell-ratio residual) mapped to
+    High/Medium/Low per method, together with the <code>ambiguous</code> flag and, for HCP,
+    <code>c_source</code>.</li>
+<li><strong>Visualisation</strong>: <code>comparison_histograms.png</code> and <code>lattice_hist_comp_data.json</code>
+    (the raw histogram data, which the GUI reads to draw the plot itself). Both are
+    written for periodic and non-periodic input when <code>plot = on</code> and both the
+    vector-statistics and the nearest-neighbour data are available. The GUI deletes an
+    existing <code>lattice_hist_comp_data.json</code> in the output folder before each run, so a
+    plot from an earlier run is never shown as the current result.</li>
+</ol>
+<hr />
+<h2 id="notes">Notes</h2>
+<p>The combination of Crystallographic Identification and Lattice Parameter Estimation as a workflow is specifically beneficial for analyzing local crystallography and the structure of extended defects and interphases, as well as for following microstructural evolution or investigating phase transition sequences.
+By iteratively adjusting RMSD parameters and visualizing the resulting isolated phase </p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

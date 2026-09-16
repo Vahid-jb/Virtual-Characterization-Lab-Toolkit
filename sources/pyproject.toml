@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=77.0.3", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vcl-toolkit"
+version = "0.0.1"
+description = "Virtual Characterization Lab (VCL) – GUI toolkit for atomistic structure analysis"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = [
+    "PySide6>=6.5",
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "ase",
+    "ovito",
+    "pymatgen",
+    "periodictable",
+    "qtawesome>=1.3.0",
+]
+
+[project.optional-dependencies]
+mpi = ["mpi4py"]            # only needed for parallel computational scripts
+dev = [
+    "pyinstaller",
+    "mkdocs",
+    "mkdocs-material",
+    "pytest>=7.0",
+    "pytest-cov",
+    "pytest-qt>=4.2.0",
+]
+
+[project.scripts]
+# Entry point – launches the converged UI
+vcl-toolkit = "vcl_launcher:main"
+
+[project.gui-scripts]
+vcl-toolkit-gui = "vcl_launcher:main"
+
+[tool.setuptools.packages.find]
+include = [
+    "VCL_utils*",
+    "Input_Converter*",
+    "Structure_Analyzer*",
+    "Vibrational_Analysis*",
+    "XRD*",
+    "TEM*",
+]
+
+[tool.setuptools.package-data]
+"*" = ["*.txt", "*.json", "*.html", "*.css", "*.js", "*.png", "*.svg"]
+# Data in a subdirectory needs its own key: the patterns above are globbed as
+# <package_dir>/*.svg and do not descend, so the theme icons would be dropped
+# from the wheel and sdist without this.
+"VCL_utils" = ["assets/icons/*.svg"]
